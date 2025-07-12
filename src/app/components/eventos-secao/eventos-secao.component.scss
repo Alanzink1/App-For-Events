@@ -2,7 +2,6 @@
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
-  gap: 6px;
   padding: 10px;
   padding-top: 0;
   scroll-snap-type: x mandatory;
@@ -19,7 +18,7 @@
   flex: 0 0 auto;
   width: 130px;
   height: 180px;
-  border-radius: 12px;
+  border-radius: 12px !important;
   overflow: hidden;
   scroll-snap-align: center;
   background: transparent;
@@ -29,5 +28,6 @@
     width: 90%;
     height: 100%;
     object-fit: cover;
+    border-radius: 12px;
   }
 }

@@ -20,7 +20,6 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     IonicModule.forRoot(),
     AppRoutingModule,
     
-    //importação de funções para que o firebase funcione no projeto
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 
     provideAuth(() => getAuth()), 
     provideFirestore(() => getFirestore()), 

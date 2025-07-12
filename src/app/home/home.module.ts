@@ -16,9 +16,12 @@ import { EventosSecaoComponent } from '../components/eventos-secao/eventos-secao
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    EventosSecaoComponent,
+    MaisEsperadosComponent,
+    
   ],
-  declarations: [HomePage, NavbarComponent, HeaderComponent, EventosSecaoComponent, MaisEsperadosComponent],
+  declarations: [HomePage, NavbarComponent, HeaderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePageModule {}

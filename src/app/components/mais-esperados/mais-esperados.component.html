@@ -1,6 +1,8 @@
 <h5 class="ion-padding-horizontal fw-normal mt-3">Os mais esperados</h5>
-<div class="carrossel-scroll">
-<div class="evento-card" *ngFor="let evento of eventos">
-    <img [src]="evento.img" />
-</div>
-</div>
+<swiper-container #swiper>
+  <swiper-slide *ngFor="let evento of eventos">
+    <div class="evento-card">
+      <img [src]="evento.img" />
+    </div>
+  </swiper-slide>
+</swiper-container>

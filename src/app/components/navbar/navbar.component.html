@@ -2,24 +2,31 @@
   <ion-toolbar color="light">
     <ion-row>
       
-      <ion-col class="d-flex flex-column align-items-center justify-content-center">
+      <ion-col class="d-flex flex-column align-items-center justify-content-center" routerLink="/home">
         <ion-img src="../../assets/icones-navbar/Home.svg" id="home-icon"></ion-img>
         <p class="text-center small mb-0">Home</p>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-col>
 
-      <ion-col class="d-flex flex-column align-items-center justify-content-center">
-        <ion-img src="../../assets/icones-navbar/Pesquisa.svg" id="home-icon"></ion-img>
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+               routerLink="/pesquisa" [style.cursor]="'pointer'">
+        <ion-img src="../../assets/icones-navbar/Pesquisa.svg" id="pesquisa-icon"></ion-img>
         <p class="text-center small mb-0">Pesquisa</p>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-col>
 
-      <ion-col class="d-flex flex-column align-items-center justify-content-center">
-        <ion-img src="../../assets/icones-navbar/Confirmados.svg" id="home-icon"></ion-img>
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+               routerLink="/confirmados" [style.cursor]="'pointer'">
+        <ion-img src="../../assets/icones-navbar/Confirmados.svg" id="confirmados-icon"></ion-img>
         <p class="text-center small mb-0">Confirmados</p>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-col>
 
-      <ion-col class="d-flex flex-column align-items-center justify-content-center">
-        <ion-img src="../../assets/icones-navbar/Meu Perfil.svg" id="home-icon"></ion-img>
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+               routerLink="/meu-perfil" [style.cursor]="'pointer'">
+        <ion-img src="../../assets/icones-navbar/Meu Perfil.svg" id="profile-icon"></ion-img>
         <p class="text-center small mb-0">Meu Perfil</p>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-col>
 
     </ion-row>
