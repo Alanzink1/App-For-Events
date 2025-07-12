@@ -10,6 +10,18 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'pesquisa',
+    loadChildren: () => import('./pesquisa/pesquisa.module').then( m => m.PesquisaPageModule)
+  },
+  {
+    path: 'confirmados',
+    loadChildren: () => import('./confirmados/confirmados.module').then( m => m.ConfirmadosPageModule)
+  },
+  {
+    path: 'meu-perfil',
+    loadChildren: () => import('./meu-perfil/meu-perfil.module').then( m => m.MeuPerfilPageModule)
   }
 ];
 

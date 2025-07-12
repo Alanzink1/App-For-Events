@@ -1,6 +1,10 @@
-<ion-content [fullscreen]="true">
+<app-header></app-header>
 
-    <ion-button color="secondary">Teste</ion-button>
-    
-    
+<ion-content [fullscreen]="true" color="light">
+    <app-eventos-secao [titulo]="'Eventos por perto'"></app-eventos-secao>
+    <app-mais-esperados></app-mais-esperados>
+    <app-eventos-secao [titulo]="'Eventos Culturais'"></app-eventos-secao>
+    <app-eventos-secao [titulo]="'Eventos Geek'"></app-eventos-secao>
 </ion-content>
+
+<app-navbar></app-navbar>
