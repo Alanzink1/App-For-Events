@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light" class="back-button-custom"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="light">
+  <div class="container-evento" *ngIf="evento">
+
+    <ion-img [src]="evento.imagemUrl" class="evento-imagem"></ion-img>
+
+    <div class="ion-padding">
+      <div class="info-principal">
+        <h1 class="evento-titulo">{{ evento.titulo }}</h1>
+        <div class="evento-avaliacao">
+          <ion-icon name="star" color="warning"></ion-icon>
+          <span>{{ evento.avaliacao }} ({{ evento.totalAvaliacoes }})</span>
+        </div>
+        <p *ngIf="evento.gratuito" class="evento-preco gratuito">Gratuito</p>
+        <p *ngIf="!evento.gratuito" class="evento-preco">{{ evento.valorIngresso | currency:'BRL' }}</p>
+      </div>
+
+      <div class="mapa-container">
+        <ion-img src="https://i.imgur.com/8NxtYy7.png" class="mapa-imagem"></ion-img>
+        <ion-button color="success" size="small" class="ver-mapa-btn">Ver no Mapa</ion-button>
+      </div>
+
+      <ion-card class="info-card">
+        <ion-card-header>
+          <ion-card-title color="dark">Detalhes do Evento</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{ evento.descricao }}
+        </ion-card-content>
+      </ion-card>
+
+       <ion-card class="info-card">
+        <ion-card-header>
+          <ion-card-title color="dark">Regras e Condições</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Aqui vão as regras e condições do evento, como classificação etária, itens proibidos, políticas de cancelamento, etc.
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-button class="h4" color="success" expand="block" shape="round" id="botao-confirmar">
+      Confirmar a minha
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

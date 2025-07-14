@@ -1,0 +1,69 @@
+// Removemos a rolagem do ion-content para a imagem preencher tudo
+ion-content {
+  --overflow: hidden;
+}
+
+.banner-container {
+  position: relative; // Essencial para o posicionamento do filho
+  width: 100%;
+  height: 100%; // Faz o container ocupar toda a altura da tela
+
+  ion-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // Garante que a imagem cubra tudo sem distorcer
+  }
+
+  .voltar-btn {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    --color: #fff; // Garante que o ícone seja branco
+    font-size: 1.8rem;
+  }
+}
+
+// Estilo para o bloco de detalhes que agora está sobre a imagem
+.detalhes-evento {
+  position: absolute; // Posiciona sobre o elemento pai (.banner-container)
+  bottom: 0; // Alinha na base
+  left: 0;
+  right: 0;
+  padding: 48px 16px 32px 16px; // Espaçamento (mais em cima, menos nos lados e embaixo)
+  text-align: left; // Alinha o texto à esquerda como na imagem 2
+
+  // Este gradiente cria o efeito de sombra escura na base da imagem
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 90%, rgba(0, 0, 0, 0) 100%);
+}
+
+
+ .voltar-btn {
+  // --- Adicione estas 4 linhas para o posicionamento ---
+  position: absolute;
+  top: 16px;  // Distância do topo
+  left: 16px; // Distância da esquerda
+  z-index: 10; // Garante que o botão fique sobre a imagem
+
+  // --- Suas regras de estilo (já estavam corretas) ---
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5); // Usei 0.5 para um pouco menos de transparência
+  --color: #fff; // Garante que a seta seja branca
+
+  // Ajustes de tamanho para o botão ficar circular
+  width: 40px;
+  height: 40px;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.titulo-evento {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.descricao-evento {
+  margin: 0 0 24px;
+  font-size: 14px;
+  opacity: 0.9;
+}

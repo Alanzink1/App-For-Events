@@ -1,0 +1,25 @@
+<ion-content [fullscreen]="true">
+  <div class="banner-container" *ngIf="evento">
+    
+    <ion-img [src]="evento?.imagemUrl"></ion-img>
+
+    <ion-button fill="clear" class="voltar-btn" routerLink="/home">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+
+    <div class="detalhes-evento">
+      <ion-text color="light">
+        <h1 class="titulo-evento">{{ evento?.titulo }}</h1>
+      </ion-text>
+
+      <ion-text color="light">
+        <p class="descricao-evento">{{ evento?.descricao }}</p>
+      </ion-text>
+
+      <ion-button expand="block" color="success" shape="round">
+        Saber Mais
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

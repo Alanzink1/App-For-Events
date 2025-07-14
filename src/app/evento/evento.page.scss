@@ -1,0 +1,118 @@
+// Cabeçalho transparente para o botão ficar sobre a imagem
+ion-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  ion-toolbar {
+    --background: transparent;
+  }
+}
+
+// Estilo customizado para o botão de voltar
+.back-button-custom {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  margin: 8px;
+}
+
+ion-back-button span {
+  display: none;
+}
+
+.evento-imagem {
+  width: 100%;
+  height: auto;
+}
+
+.info-principal {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ion-color-step-150, #d9d9d9);
+}
+
+.evento-titulo {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: --ion-color-dark !important;
+}
+
+
+ion-card-title {
+}
+
+.evento-avaliacao {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--ion-color-step-600, #666);
+  margin-top: 8px;
+
+  ion-icon {
+    font-size: 18px;
+    margin-right: 4px;
+  }
+}
+
+.evento-preco {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--ion-color-success);
+  margin-top: 8px;
+}
+
+.mapa-container {
+  position: relative;
+  margin-top: 16px;
+  .mapa-imagem {
+    border-radius: 12px;
+  }
+  .ver-mapa-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.info-card {
+  --background: var(--ion-color-light);
+  margin: 16px 0;
+  border-radius: 12px;
+  box-shadow: none;
+  border: 1px solid var(--ion-color-step-150, #d9d9d9);
+}
+
+// Estilo do rodapé e botão de confirmar
+ion-footer {
+  // Sombra para destacar o rodapé
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+
+  ion-toolbar {
+    padding: 8px;
+  }
+}
+
+#botao-confirmar {
+  font-weight: bold;
+  height: 48px;
+  background-color: --ion-color-success;
+}
+
+ion-button {
+  background-color: --ion-color-success;
+}
+
+.container-evento {
+  background-color: --ion-color-light;
+}

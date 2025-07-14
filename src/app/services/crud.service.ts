@@ -4,6 +4,7 @@ import { addDoc, getDocs, doc, updateDoc, collection, Firestore, deleteDoc, quer
 import { AuthenticateService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AlertController } from '@ionic/angular';
+import { getDoc } from '@angular/fire/firestore';
 
 @Injectable({
     providedIn: 'root',
@@ -110,6 +111,25 @@ export class CrudService {
 
         return data;
     }
+
+    
+
+    async fetchById(id: string, remoteCollectionName: string): Promise<any> {
+    this.isLoading = true;
+    const docRef = doc(this.firestore, remoteCollectionName, id);
+
+    const docSnap = await getDoc(docRef)
+        .catch(() => {
+        this._message.show('Erro ao buscar item.');
+        return null;
+        })
+        .finally(() => {
+        this.isLoading = false;
+        });
+
+    return docSnap?.exists() ? { ...docSnap.data(), id: docSnap.id } : null;
+    }
+
 
     /*
     * @description: Pegar os itens utilizando o operador Like para consulta

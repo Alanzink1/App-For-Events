@@ -22,6 +22,14 @@ const routes: Routes = [
   {
     path: 'meu-perfil',
     loadChildren: () => import('./meu-perfil/meu-perfil.module').then( m => m.MeuPerfilPageModule)
+  },
+  {
+    path: 'evento/:id',
+    loadChildren: () => import('./evento/evento.module').then( m => m.EventoPageModule)
+  },
+  {
+    path: 'evento-scroll',
+    loadChildren: () => import('./evento-scroll/evento-scroll.module').then( m => m.EventoScrollPageModule)
   }
 ];
 

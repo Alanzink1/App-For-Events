@@ -1,9 +1,31 @@
 <h5 class="ion-padding-horizontal fw-normal mt-3">{{ titulo }}</h5>
 
+<swiper-container #swiper [options]="slideOpts">
+  
+  <ng-container *ngIf="isLoading">
+    <swiper-slide *ngFor="let i of [1,2,3,4,5]">
+      <div class="evento-card">
+        <ion-skeleton-text [animated]="true" style="width: 100%; height: 150px;"></ion-skeleton-text>
+      </div>
+    </swiper-slide>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoading">
+    <swiper-slide *ngFor="let evento of eventos">
+      <div class="evento-card" [routerLink]="['/evento', evento.id]">
+        <ion-img [src]="evento.imagemUrl"></ion-img>
+      </div>
+    </swiper-slide>
+  </ng-container>
+
+</swiper-container>
+
+<!-- <h5 class="ion-padding-horizontal fw-normal mt-3">{{ titulo }}</h5>
+
 <swiper-container #swiper>
   <swiper-slide *ngFor="let evento of eventos">
-      <div class="evento-card">
+      <div class="evento-card" [routerLink]="['/evento', evento.id]">
         <img [src]="evento.imagemUrl" />
       </div>
   </swiper-slide>
-</swiper-container>
+</swiper-container> -->
