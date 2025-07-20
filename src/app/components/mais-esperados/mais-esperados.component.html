@@ -1,8 +1,9 @@
-<h5 class="ion-padding-horizontal fw-normal mt-3">Os mais esperados</h5>
+<h5 class="ion-padding-horizontal fw-normal mt-3">Patrocinados</h5>
+
 <swiper-container #swiper>
   <swiper-slide *ngFor="let evento of eventos">
     <div class="evento-card">
-      <img [src]="evento.img" />
+      <a [href]="evento.link"><img #eventoImg [src]="evento.bannerUrl" class="img-evento" crossorigin="anonymous" /></a>
     </div>
   </swiper-slide>
 </swiper-container>

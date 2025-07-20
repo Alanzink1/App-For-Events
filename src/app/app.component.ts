@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Component, NgModule } from '@angular/core';
+import { IonicModule, IonicRouteStrategy, Platform } from '@ionic/angular';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { register } from 'swiper/element/bundle';
+
 register();
 
 @Component({
@@ -9,6 +10,7 @@ register();
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
+
 export class AppComponent {
   constructor(private platform: Platform) {
     this.platform.ready().then(() => {

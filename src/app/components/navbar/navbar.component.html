@@ -2,7 +2,8 @@
   <ion-toolbar color="light">
     <ion-row>
       
-      <ion-col class="d-flex flex-column align-items-center justify-content-center" routerLink="/home">
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+               routerLink="/home" [style.cursor]="'pointer'">
         <ion-img src="../../assets/icones-navbar/Home.svg" id="home-icon"></ion-img>
         <p class="text-center small mb-0">Home</p>
         <ion-ripple-effect></ion-ripple-effect>

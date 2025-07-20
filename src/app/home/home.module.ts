@@ -9,8 +9,11 @@ import { NavbarComponent } from '../components/navbar/navbar.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { MaisEsperadosComponent } from '../components/mais-esperados/mais-esperados.component';
 import { EventosSecaoComponent } from '../components/eventos-secao/eventos-secao.component';
+import { MunicipioOpcaoComponent } from '../components/municipio-opcao/municipio-opcao.component';
+import { SharedModule } from '../shared/shared.module';
 
 
+// home.module.ts
 @NgModule({
   imports: [
     CommonModule,
@@ -19,9 +22,9 @@ import { EventosSecaoComponent } from '../components/eventos-secao/eventos-secao
     HomePageRoutingModule,
     EventosSecaoComponent,
     MaisEsperadosComponent,
-    
+    SharedModule
   ],
-  declarations: [HomePage, NavbarComponent, HeaderComponent],
+  declarations: [MunicipioOpcaoComponent, HomePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePageModule {}

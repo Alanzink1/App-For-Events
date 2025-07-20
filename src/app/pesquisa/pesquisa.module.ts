@@ -7,13 +7,20 @@ import { IonicModule } from '@ionic/angular';
 import { PesquisaPageRoutingModule } from './pesquisa-routing.module';
 
 import { PesquisaPage } from './pesquisa.page';
+import { HeaderComponent } from '../components/header/header.component';
+import { SearchbarComponent } from '../components/searchbar/searchbar.component';
+import { NavbarComponent } from '../components/navbar/navbar.component';
+import { SharedModule } from '../shared/shared.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    FormsModule, 
     IonicModule,
-    PesquisaPageRoutingModule
+    PesquisaPageRoutingModule,
+    SearchbarComponent,
+    SharedModule
   ],
   declarations: [PesquisaPage]
 })

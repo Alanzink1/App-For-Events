@@ -116,3 +116,30 @@ ion-button {
 .container-evento {
   background-color: --ion-color-light;
 }
+
+// Em evento.page.scss
+
+.mapa-container {
+  position: relative;
+  margin-top: 16px;
+  height: 200px; // É importante definir uma altura
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden; // Garante que a imagem fique dentro das bordas arredondadas
+  background-color: #e0e0e0; // Cor de fundo enquanto o mapa carrega
+
+  .mapa-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .ver-mapa-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: #fff;
+  }
+}

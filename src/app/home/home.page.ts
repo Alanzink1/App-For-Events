@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
-import { AuthenticateService } from '../services/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../services/crud.service';
-import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { MessageService } from '../services/message.service';
-import { Router } from '@angular/router';
-import { IonFooter, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  constructor( 
-    public crudService: CrudService
-  ){ }
+  isLoading = true;
 
-  
+  constructor(public crudService: CrudService) {}
 
+  ngOnInit() {
+    this.simularCarregamento();
+    // ou, se quiser carregar dados reais:
+    // this.carregarEventos();
+  }
+
+  async simularCarregamento() {
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    this.isLoading = false;
+  }
 }

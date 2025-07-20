@@ -1,10 +1,22 @@
-<app-header></app-header>
+<ng-container *ngIf="!isLoading; else splash">
+  <app-header></app-header>
+  <ng-container *ngIf="!isLoading"> 
+    <ion-content [fullscreen]="true" color="light">
+        <app-municipio-opcao></app-municipio-opcao>
+        <app-eventos-secao [titulo]="'Todos os Eventos'"></app-eventos-secao>
+        <app-eventos-secao [titulo]="'Eventos por perto'" [categoria]="'Próximos'"></app-eventos-secao>
+        <app-mais-esperados></app-mais-esperados>
+        <app-eventos-secao [titulo]="'Eventos Culturais'" [categoria]="'Cultura'"></app-eventos-secao>
+        <app-eventos-secao [titulo]="'Eventos Geek'" [categoria]="'Geek'"></app-eventos-secao>
+    </ion-content>
+  </ng-container> 
 
-<ion-content [fullscreen]="true" color="light">
-    <app-eventos-secao [titulo]="'Eventos por perto'"></app-eventos-secao>
-    <app-mais-esperados></app-mais-esperados>
-    <app-eventos-secao [titulo]="'Eventos Culturais'" [categoria]="'Cultura'"></app-eventos-secao>
-    <app-eventos-secao [titulo]="'Eventos Geek'" [categoria]="'Geek'"></app-eventos-secao>
-</ion-content>
+  <app-navbar></app-navbar>
+</ng-container>
 
-<app-navbar></app-navbar>
+<ng-template #splash>
+  <div class="splash-screen">
+    <img src="/assets/icon/logo-afe.png" alt="AFE Logo" />
+    <ion-spinner name="crescent" color="light" class="spinner"></ion-spinner>
+  </div>
+</ng-template>

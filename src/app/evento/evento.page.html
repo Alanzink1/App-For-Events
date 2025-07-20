@@ -22,9 +22,11 @@
         <p *ngIf="!evento.gratuito" class="evento-preco">{{ evento.valorIngresso | currency:'BRL' }}</p>
       </div>
 
-      <div class="mapa-container">
-        <ion-img src="https://i.imgur.com/8NxtYy7.png" class="mapa-imagem"></ion-img>
-        <ion-button color="success" size="small" class="ver-mapa-btn">Ver no Mapa</ion-button>
+      <div #mapaContainer class="mapa-container">
+        <ion-img *ngIf="urlMapaEstatico" [src]="urlMapaEstatico" class="mapa-imagem"></ion-img>
+        <ion-button color="warning" size="small" class="ver-mapa-btn" (click)="abrirMapaExterno()">
+          Ver no Mapa
+        </ion-button>
       </div>
 
       <ion-card class="info-card">

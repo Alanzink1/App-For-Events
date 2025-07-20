@@ -15,42 +15,33 @@
 }
 
 .evento-card {
-  width: 100%;
-  height: 150px; // Defina uma altura fixa para o card
-  display: block;
-  border-radius: 8px;
+  width: 130px;
+  height: 180px;
+  border-radius: 12px;
   overflow: hidden;
+  scroll-snap-align: center;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 1 !important;
 
   ion-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
-  // Estilo para o skeleton dentro do card
+
   ion-skeleton-text {
     width: 100%;
     height: 100%;
-    // Remove a margem padrão para preencher o card
     margin: 0;
   }
 }
 
-
-.evento-card {
-  flex: 0 0 auto;
-  width: 130px;
-  height: 180px;
-  border-radius: 12px !important;
-  overflow: hidden;
-  scroll-snap-align: center;
-  background: transparent;
-  box-shadow: none;
-
-  img {
-    width: 90%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-  }
+swiper-slide {
+  width: auto !important;
+  flex-shrink: 1 !important;
+  padding: 1%;
 }

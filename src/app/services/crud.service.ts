@@ -52,6 +52,21 @@ export class CrudService {
         return result;
     }
 
+
+    async fetchWhereIn<T>(collectionName: string, field: string, values: any[]): Promise<T[]> {
+  
+  if (!values || values.length === 0) {
+    return [];
+  }
+  
+  const q = query(collection(this.firestore, collectionName), where(field, 'in', values));
+  const querySnapshot = await getDocs(q);
+  
+  return querySnapshot.docs.map(doc => {
+    return { id: doc.id, ...doc.data() } as T;
+  });
+}
+
     /*
     * @description: Pegar todos os itens do banco de dados
     * @param remoteCollection: string
@@ -81,6 +96,13 @@ export class CrudService {
 
         return data;
     }
+
+    async fetchAllGeneric<T>(collectionName: string): Promise<T[]> {
+    const querySnapshot = await getDocs(collection(this.firestore, collectionName));
+    return querySnapshot.docs.map(doc => {
+      return { id: doc.id, ...doc.data() } as T;
+    });
+  }
 
     /*
     * @description: Pegar um item usando um operador específico como = < > <> >= <=

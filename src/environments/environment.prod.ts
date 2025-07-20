@@ -8,5 +8,6 @@ export const environment = {
     appId: "1:19002423064:web:4876707510d97b1c09106d",
     measurementId: "G-B9ZLGXY8MT"
   },
+  googleMapsApiKey: 'AIzaSyB1dGfJV2AN803u1Tdl9Fz4ymfyUNRpfyY',
   production: true
 };
