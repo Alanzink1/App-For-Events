@@ -1,0 +1,114 @@
+ion-content {
+  --background: #f4f5f8; // Fundo cinza claro geral
+}
+
+// O container principal do cabeçalho do perfil
+.profile-header {
+  background: #e1f6f8; // Fundo azul claro
+  padding: 24px 16px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  // Usamos flexbox para alinhar o avatar e o nome
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-container {
+  position: relative; // Cria um contexto para o ícone de engrenagem
+  margin-bottom: 12px;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+
+.profile-avatar-icon {
+  font-size: 90px;
+  color: var(--ion-color-medium);
+}
+
+.profile-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+.settings-icon {
+  // Posicionamento absoluto em relação ao container do avatar
+  position: absolute;
+  bottom: 0;
+  right: -5px; // Ajuste fino para a posição
+  font-size: 1.8rem;
+  color: #555;
+  background-color: #f4f5f8; // Fundo para parecer que está sobre a borda
+  border-radius: 50%;
+  padding: 5px; // Espaçamento interno
+  cursor: pointer;
+}
+
+
+// --- Estilos para o restante da página (sem alterações) ---
+
+.profile-options {
+  padding: 24px 16px;
+
+  .option-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+    ion-icon {
+      font-size: 1.4rem;
+      margin-right: 12px;
+    }
+
+    // Adiciona a seta indicadora à direita
+    &::after {
+      content: '›';
+      color: #c7c7cc;
+      font-size: 1.8rem;
+      position: absolute;
+      right: 16px;
+    }
+  }
+
+  .organizer-button {
+    margin-top: 24px;
+    height: 48px;
+    font-weight: bold;
+  }
+}
+
+.container-deslogado, .spinner-center {
+  // Estilos para os outros estados (sem alterações)
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.profile-header {
+  position: relative; 
+}
+
+.settings-icon {
+  position: absolute;
+  top: 24px;
+  right: 20px;
+  font-size: 1.8rem;
+  color: #555;
+  cursor: pointer;
+  background-color: transparent;
+}

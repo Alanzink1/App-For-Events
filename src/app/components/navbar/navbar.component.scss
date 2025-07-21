@@ -9,3 +9,25 @@
   width: 35px;
   height: 35px;
 }
+
+ion-img {
+  width: 35px;
+  height: 35px;
+  transition: filter 0.2s ease;
+}
+
+.active-red {
+  filter: invert(24%) sepia(89%) saturate(7491%) hue-rotate(356deg) brightness(104%) contrast(118%);
+}
+
+.active-blue {
+  filter: invert(27%) sepia(98%) saturate(1181%) hue-rotate(184deg) brightness(97%) contrast(101%);
+}
+
+.active-green {
+  filter: invert(63%) sepia(72%) saturate(388%) hue-rotate(77deg) brightness(94%) contrast(94%);
+}
+
+.active-yellow {
+  filter: invert(85%) sepia(75%) saturate(633%) hue-rotate(359deg) brightness(105%) contrast(98%);
+}

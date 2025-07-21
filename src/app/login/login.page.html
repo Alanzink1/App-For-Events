@@ -1,0 +1,16 @@
+<app-header></app-header>
+
+<ion-content [fullscreen]="true" color="primary">
+  <div class="login-container">
+    <img src="/assets/icon/logo-afe.png" class="logo" alt="AFE Logo" />
+
+    <ion-input [(ngModel)]="email" placeholder="Usuário ou email" type="email"></ion-input>
+    <ion-input [(ngModel)]="senha" placeholder="Senha" type="password"></ion-input>
+
+    <a (click)="esqueciSenha()">Esqueci meu acesso...</a>
+
+    <ion-button expand="block" color="success" (click)="login()">ENTRAR</ion-button>
+  </div>
+</ion-content>
+
+<app-navbar></app-navbar>

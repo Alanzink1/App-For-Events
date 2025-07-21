@@ -25,6 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 
     provideAuth(() => getAuth()), 
     provideFirestore(() => getFirestore()), 
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
     provideStorage(() => getStorage())
     
   ],

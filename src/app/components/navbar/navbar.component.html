@@ -1,31 +1,43 @@
 <ion-footer>
   <ion-toolbar color="light">
     <ion-row>
-      
-      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center"
                routerLink="/home" [style.cursor]="'pointer'">
-        <ion-img src="../../assets/icones-navbar/Home.svg" id="home-icon"></ion-img>
+        <ion-img src="../../assets/icones-navbar/Home.svg"
+                 id="home-icon"
+                 [ngClass]="{'active-red': currentRoute === '/home'}">
+        </ion-img>
         <p class="text-center small mb-0">Home</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-col>
 
-      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center"
                routerLink="/pesquisa" [style.cursor]="'pointer'">
-        <ion-img src="../../assets/icones-navbar/Pesquisa.svg" id="pesquisa-icon"></ion-img>
+        <ion-img src="../../assets/icones-navbar/Pesquisa.svg"
+                 id="pesquisa-icon"
+                 [ngClass]="{'active-blue': currentRoute === '/pesquisa'}">
+        </ion-img>
         <p class="text-center small mb-0">Pesquisa</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-col>
 
-      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center"
                routerLink="/confirmados" [style.cursor]="'pointer'">
-        <ion-img src="../../assets/icones-navbar/Confirmados.svg" id="confirmados-icon"></ion-img>
+        <ion-img src="../../assets/icones-navbar/Confirmados.svg"
+                 id="confirmados-icon"
+                 [ngClass]="{'active-green': currentRoute === '/confirmados'}">
+        </ion-img>
         <p class="text-center small mb-0">Confirmados</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-col>
 
-      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center" 
+      <ion-col class="ion-activatable d-flex flex-column align-items-center justify-content-center"
                routerLink="/meu-perfil" [style.cursor]="'pointer'">
-        <ion-img src="../../assets/icones-navbar/Meu Perfil.svg" id="profile-icon"></ion-img>
+        <ion-img src="../../assets/icones-navbar/Meu Perfil.svg"
+                 id="profile-icon"
+                 [ngClass]="{'active-yellow': currentRoute === '/meu-perfil'}">
+        </ion-img>
         <p class="text-center small mb-0">Meu Perfil</p>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-col>

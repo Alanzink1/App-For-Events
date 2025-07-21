@@ -1,0 +1,28 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  height: 100%;
+
+  .logo {
+    width: 200px;
+    margin-bottom: 2rem;
+  }
+
+  ion-input {
+    width: 100%;
+    margin-bottom: 1rem;
+    background: white;
+    border-radius: 8px;
+    padding: 0.5rem;
+  }
+
+  a {
+    margin: 1rem 0;
+    color: #ffffff;
+    font-size: 0.9rem;
+  }
+}
+

@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'evento-scroll',
     loadChildren: () => import('./evento-scroll/evento-scroll.module').then( m => m.EventoScrollPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }
 ];
 
