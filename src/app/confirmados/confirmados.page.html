@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <ion-content [fullscreen]="true">
 
   <ion-segment [(ngModel)]="status" class="minimal-segment bg-transparent">
@@ -10,35 +11,87 @@
     </ion-segment-button>
   </ion-segment>
 
-<div>
-  <ion-list-header>Dezembro</ion-list-header>
-  
-  <ng-container *ngFor="let evento of confirmados">
-    <ion-item lines="none" class="evento-item">
-      <ion-thumbnail slot="start">
-        <ion-img 
-          [src]="evento.imagemUrl"
-          class="evento-imagem">
-        </ion-img>
-      </ion-thumbnail>
+  <div [ngSwitch]="status">
 
-      <ion-label>
-        <h2 class="evento-titulo">{{evento.titulo}}</h2>
-        <p class="evento-local">
-          <ion-icon name="location-outline"></ion-icon>
-          {{evento.local}}
-        </p>
-      </ion-label>
+    <ng-container *ngSwitchCase="'irei'">
+      <div *ngFor="let grupo of eventosIreiAgrupados">
+        
+        <ion-list-header>{{ grupo.mes }}</ion-list-header>
+        
+        <ng-container *ngFor="let evento of grupo.eventos">
+          <div [routerLink]="['/evento', evento.id]">
+            <ion-item lines="none" class="evento-item">
+              <ion-thumbnail slot="start">
+                <ion-img 
+                  [src]="evento.imagemUrl"
+                  class="evento-imagem">
+                </ion-img>
+              </ion-thumbnail>
 
-      <div class="evento-data" slot="end">
-        <span class="mes">{{evento.dataMes}}</span>
-        <span class="dia">{{evento.dataDia}}</span>
-        <span class="dia-semana">{{evento.diaDaSemana}}</span>
+              <ion-label>
+                <h2 class="evento-titulo">{{evento.titulo}}</h2>
+                <p class="evento-local">
+                  <ion-icon name="location-outline"></ion-icon>
+                  {{evento.local}}
+                </p>
+              </ion-label>
+
+              <div class="evento-data" slot="end">
+                <span class="mes">{{evento.dataMes}}</span>
+                <span class="dia">{{evento.dataDia}}</span>
+                <span class="dia-semana">{{evento.diaDaSemana}}</span>
+              </div>
+            </ion-item>
+          </div>
+        </ng-container>
       </div>
-    </ion-item>
-  </ng-container>
 
-</div>
+      <div *ngIf="eventosIreiAgrupados.length === 0 && !isLoading" class="ion-padding ion-text-center">
+        <p>Você não tem eventos futuros confirmados.</p>
+      </div>
+    </ng-container>
+
+
+    <ng-container *ngSwitchCase="'jaFui'">
+      <div *ngFor="let grupo of eventosJaFuiAgrupados">
+        
+        <ion-list-header>{{ grupo.mes }}</ion-list-header>
+        
+        <ng-container *ngFor="let evento of grupo.eventos">
+          <div [routerLink]="['/evento', evento.id]">
+            <ion-item lines="none" class="evento-item">
+              <ion-thumbnail slot="start">
+                <ion-img 
+                  [src]="evento.imagemUrl"
+                  class="evento-imagem">
+                </ion-img>
+              </ion-thumbnail>
+
+              <ion-label>
+                <h2 class="evento-titulo">{{evento.titulo}}</h2>
+                <p class="evento-local">
+                  <ion-icon name="location-outline"></ion-icon>
+                  {{evento.local}}
+                </p>
+              </ion-label>
+
+              <div class="evento-data" slot="end">
+                <span class="mes">{{evento.dataMes}}</span>
+                <span class="dia">{{evento.dataDia}}</span>
+                <span class="dia-semana">{{evento.diaDaSemana}}</span>
+              </div>
+            </ion-item>
+          </div>
+        </ng-container>
+      </div>
+
+      <div *ngIf="eventosJaFuiAgrupados.length === 0 && !isLoading" class="ion-padding ion-text-center">
+        <p>Você não tem eventos passados.</p>
+      </div>
+    </ng-container>
+
+  </div>
 
 </ion-content>
+
 <app-navbar></app-navbar>

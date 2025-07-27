@@ -8,6 +8,7 @@ import { ConfirmadosPageRoutingModule } from './confirmados-routing.module';
 
 import { ConfirmadosPage } from './confirmados.page';
 import { SharedModule } from '../shared/shared.module';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     IonicModule,
     ConfirmadosPageRoutingModule,
     SharedModule,
+    RouterModule
   ],
   declarations: [ConfirmadosPage]
 })
