@@ -188,6 +188,15 @@
    * -------------------------------------------
    */
 
+   .ion-color-transparent {
+    --ion-color-base: transparent;
+    --ion-color-base-rgb: 255, 255, 255;
+    --ion-color-contrast: transparent;
+    --ion-color-contrast-rgb: 255,255,255;
+    --ion-color-shade: transparent;
+    --ion-color-tint: transparent;
+}
+
   .md body {
     --ion-background-color: #f5f5f5;
     --ion-background-color-rgb: 18,18,18;

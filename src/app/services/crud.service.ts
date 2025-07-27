@@ -1,4 +1,4 @@
-import { orderBy } from '@firebase/firestore';
+import { FieldPath, orderBy } from '@firebase/firestore';
 import { Injectable } from '@angular/core';
 import { addDoc, getDocs, doc, updateDoc, collection, Firestore, deleteDoc, query, where, WhereFilterOp, startAt, endAt } from '@angular/fire/firestore';
 import { AuthenticateService } from 'src/app/services/auth.service';
@@ -55,17 +55,28 @@ export class CrudService {
 
     async fetchWhereIn<T>(collectionName: string, field: string, values: any[]): Promise<T[]> {
   
-  if (!values || values.length === 0) {
-    return [];
-  }
-  
-  const q = query(collection(this.firestore, collectionName), where(field, 'in', values));
-  const querySnapshot = await getDocs(q);
-  
-  return querySnapshot.docs.map(doc => {
-    return { id: doc.id, ...doc.data() } as T;
-  });
-}
+    if (!values || values.length === 0) {
+        return [];
+    }
+    
+    const q = query(collection(this.firestore, collectionName), where(field, 'in', values));
+    const querySnapshot = await getDocs(q);
+    
+    return querySnapshot.docs.map(doc => {
+        return { id: doc.id, ...doc.data() } as T;
+    });
+    }
+
+    async fetchWhereIsIn<T>(
+        collectionName: string,
+        field: string | FieldPath,
+        values: string[]
+    ): Promise<T[]> {
+        const ref = collection(this.firestore, collectionName);
+        const q = query(ref, where(field, 'in', values));
+        const snapshot = await getDocs(q);
+        return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as T));
+    }
 
     /*
     * @description: Pegar todos os itens do banco de dados

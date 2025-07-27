@@ -1,13 +1,44 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>confirmados</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header></app-header>
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">confirmados</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  <ion-segment [(ngModel)]="status" class="minimal-segment bg-transparent">
+    <ion-segment-button value="irei" class="bg-transparent">
+      <ion-label class="bg-transparent">Irei</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="jaFui" class="bg-transparent">
+      <ion-label class="bg-transparent">Já Fui</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+<div>
+  <ion-list-header>Dezembro</ion-list-header>
+  
+  <ng-container *ngFor="let evento of confirmados">
+    <ion-item lines="none" class="evento-item">
+      <ion-thumbnail slot="start">
+        <ion-img 
+          [src]="evento.imagemUrl"
+          class="evento-imagem">
+        </ion-img>
+      </ion-thumbnail>
+
+      <ion-label>
+        <h2 class="evento-titulo">{{evento.titulo}}</h2>
+        <p class="evento-local">
+          <ion-icon name="location-outline"></ion-icon>
+          {{evento.local}}
+        </p>
+      </ion-label>
+
+      <div class="evento-data" slot="end">
+        <span class="mes">{{evento.dataMes}}</span>
+        <span class="dia">{{evento.dataDia}}</span>
+        <span class="dia-semana">{{evento.diaDaSemana}}</span>
+      </div>
+    </ion-item>
+  </ng-container>
+
+</div>
+
 </ion-content>
+<app-navbar></app-navbar>

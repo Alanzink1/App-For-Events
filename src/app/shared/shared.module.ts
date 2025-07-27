@@ -21,15 +21,12 @@ import { HeaderComponent } from '../components/header/header.component';
     CommonModule, 
     IonicModule, 
     RouterLink,
-    // --- 2. ADICIONE OS MÓDULOS DO FIREBASE AOS IMPORTS ---
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule
   ],
   exports: [
-    // Exporta seus componentes
     NavbarComponent, 
     HeaderComponent,
-    // --- 3. E TAMBÉM EXPORTA OS MÓDULOS DO FIREBASE ---
     AngularFireModule,
     AngularFireAuthModule
   ]
