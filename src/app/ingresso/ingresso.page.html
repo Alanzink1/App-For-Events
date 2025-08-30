@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loader enquanto não carrega -->
+  <div *ngIf="!evento" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <!-- Conteúdo do ingresso -->
+  <div class="container-evento" #areaParaSalvar *ngIf="evento">
+    <!-- Imagem do evento -->
+    <ion-img [src]="evento.imagemUrl" class="evento-imagem rounded-bottom"></ion-img>
+
+    <div class="ion-padding">
+      <!-- Título e local -->
+      <div class="info-principal ion-text-center">
+        <h1 class="evento-titulo">{{ evento.titulo }}</h1>
+        <div class="evento-avaliacao">
+          <ion-icon name="location-outline" color="danger"></ion-icon>
+          <span>{{ evento.local }}</span>
+        </div>
+      </div>
+
+      <div class="qr-container">
+        <qrcode [qrdata]="qrData" [width]="200" [errorCorrectionLevel]="'M'"></qrcode>
+        <div class="visualizar-link" (click)="baixarIngresso()">Baixar Ingresso</div>
+      </div>
+
+      <div class="data-evento">
+        <div class="dia-semana">{{ diaSemana }}</div>
+        <div class="dia">{{ dia }}</div>
+        <div class="mes">{{ mes }}</div>
+        <div class="ano">{{ ano }}</div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<app-navbar></app-navbar>

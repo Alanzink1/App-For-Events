@@ -1,0 +1,109 @@
+// Cabeçalho transparente para o botão ficar sobre a imagem
+ion-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+
+  ion-toolbar {
+    --background: transparent;
+  }
+}
+
+.container-evento {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+ion-back-button span {
+  display: none;
+}
+
+.evento-imagem {
+  width: 100%;
+  height: auto;
+}
+
+.info-principal {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ion-color-step-150, #d9d9d9);
+}
+
+.evento-titulo {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: var(--ion-color-dark) !important;
+}
+
+.evento-avaliacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: var(--ion-color-dark);
+  margin-top: 8px;
+
+  ion-icon {
+    font-size: 18px;
+    margin-right: 4px;
+  }
+}
+
+/* Estilo do QR Code */
+.qr-container {
+  margin-top: 16px;
+
+  qrcode {
+    display: block;
+    margin: auto;
+  }
+
+  .visualizar-link {
+    color: var(--ion-color-primary);
+    font-size: 14px;
+    margin-top: 8px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+/* Rodapé com data do evento */
+.data-evento {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  font-family: Arial, sans-serif;
+
+  .dia-semana {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  .dia {
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 4px;
+  }
+
+  .mes {
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 4px;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .ano {
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 4px;
+  }
+}

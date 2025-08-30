@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 // Seus componentes compartilhados (já estavam corretos)
 import { NavbarComponent } from '../components/navbar/navbar.component';
 import { HeaderComponent } from '../components/header/header.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { StorageModule } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,16 @@ import { HeaderComponent } from '../components/header/header.component';
     IonicModule, 
     RouterLink,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    StorageModule
   ],
   exports: [
     NavbarComponent, 
     HeaderComponent,
     AngularFireModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    StorageModule
+    
   ]
 })
 export class SharedModule {}

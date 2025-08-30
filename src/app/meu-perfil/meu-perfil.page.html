@@ -21,7 +21,7 @@
         <ion-icon name="person-circle" *ngIf="!perfil.fotoUrl" class="profile-avatar-icon"></ion-icon>
       </div>
       <h2 class="profile-name">{{ perfil.nome || 'Usuário' }}</h2>
-      <ion-icon name="settings-outline" class="settings-icon" routerLink="/configuracoes"></ion-icon>
+      <ion-icon name="settings-outline" class="settings-icon" routerLink="/configuracao"></ion-icon>
     </div>
 
     <div class="profile-options">
@@ -38,7 +38,10 @@
         <ion-label>Eventos Salvos</ion-label>
       </ion-item>
 
-      <ion-button expand="block" shape="round" class="organizer-button">
+      <ion-button *ngIf="perfil.organizador" expand="block" shape="round" class="organizer-panel-button">
+        Painel do Organizador
+      </ion-button>
+      <ion-button *ngIf="!perfil.organizador" expand="block" shape="round" class="organizer-button">
         Tornar-se Organizador
       </ion-button>
     </div>

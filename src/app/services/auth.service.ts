@@ -1,94 +1,125 @@
-import { MessageService } from './message.service';
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, User, UserCredential } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { MessageService } from './message.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-
 export class AuthenticateService {
-    duration: number = 2000;
-    message: string = 'Erro inesperado';
-    isLoading = false;
+  isLoading = false;
 
-    constructor( 
-        public auth: Auth,
-        private _message: MessageService,
-        private _router: Router,
-    ) { }
+  constructor( 
+    public auth: Auth,
+    private _message: MessageService,
+    private _router: Router,
+  ) {}
+  
+  /**
+   * Registra um novo usuário. Retorna o UserCredential em caso de sucesso ou null em caso de falha.
+   */
+  public async register(email: string, password: string) {
+    this.isLoading = true;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      this._message.show('Conta criada com sucesso! Realize o Login!');
+      return userCredential;
+    } catch (error: any) {
+      this.showErro(error);
+      return null;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  /**
+   * Efetua login com e-mail e senha.
+   */
+  public async login(email: string, password: string) {
+    this.isLoading = true;
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      this._message.show('Login Realizado com Sucesso!');
+      this.redirectTo('/home');
+      return userCredential;
+    } catch (error: any) {
+      this.showErro(error);
+      return null;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  /**
+   * Efetua login com uma conta Google.
+   */
+  async loginComGoogle(): Promise<UserCredential | null> {
+  this.isLoading = true;
+  try {
+    // Apenas faz o login e retorna o resultado
+    return await signInWithPopup(this.auth, new GoogleAuthProvider());
+  } catch (error: any) {
+    this.showErro(error);
+    return null;
+  } finally {
+    this.isLoading = false;
+  }
+}
+
+  /**
+   * Efetua logout do usuário.
+   */
+  async logout(): Promise<void> {
+    try {
+      await signOut(this.auth);
+      this.redirectTo('/login');
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+    }
+  }
+
+  /**
+   * Retorna um Observable com o estado de autenticação (usuário logado ou null).
+   * Essencial para o resto do app saber se o usuário está logado.
+   */
+  getAuthState(): Observable<User | null> {
+    return new Observable(subscriber => {
+      onAuthStateChanged(this.auth, user => {
+        subscriber.next(user);
+      });
+    });
+  }
+  
+  /**
+   * Redireciona o usuário para outra página.
+   */
+  redirectTo(page: string): void {
+    this._router.navigate([page]);
+  }
+
+  /**
+   * Exibe a mensagem de erro com base no código do Firebase.
+   */
+  private showErro(error: any): void {
+    let message: string = 'Ocorreu um erro inesperado. Tente novamente.';
     
-    /*
-    * @description: Registra um novo usuário
-    * @param email: string
-    * @param password: string
-    * @return: Promise<any>
-    * */
-    public async register(email: string, password: string): Promise<boolean> {
-        this.isLoading = true;
-
-        createUserWithEmailAndPassword(this.auth, email, password)
-        .then(() => {
-            this._message.show('Conta criada com sucesso! Realize o Login!!!');
-        })
-        .catch((_: any) => {
-            this.showErro(_, email, password);
-        })
-        .finally(() => {
-            this.isLoading = false;
-        });
-
-        return true;
-    };
-
-    /*
-    * @description: Efetua login usando o firebase
-    * @param email: string
-    * @param password: string
-    * @return: Promise<any>
-    * */
-    public async login(email: string, password: string): Promise<boolean>{
-        this.isLoading = true;
-
-        signInWithEmailAndPassword(this.auth, email, password)
-        .then((response: any) => {
-            console.log(response.user);
-            this._message.show('Login Realizado com Sucesso!');
-        })
-        .catch((_: any) => {
-            this.showErro(_, email, password);
-        })
-        .finally(() => {
-            this.isLoading = false;
-        });
-
-        return true;
+    switch (error.code) {
+      case 'auth/too-many-requests':
+        message = 'Muitas tentativas de login. Tente novamente mais tarde.';
+        break;
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential':
+        message = 'E-mail ou senha inválidos.';
+        break;
+      case 'auth/weak-password':
+        message = 'A senha deve conter no mínimo 6 caracteres.';
+        break;
+      case 'auth/email-already-in-use':
+        message = 'Este e-mail já está em uso por outra conta.';
+        break;
     }
-
-    
-    /*
-    * @description: Chame essa função para redirecionar um usuário para outra página
-    * @param page: string
-    * */
-    redirectTo(page: string){
-        this._router.navigate([page]);
-    }
-
-    /*
-    * @description: Exibe a mensagem de erro
-    * @param error: any response from firebase
-    * @param email: string
-    */
-    showErro(_: any, email: string, password: string){
-        if (_.code == 'auth/too-many-requests') this.message = 'Você realizou muitas tentativas de login. Tente novamente mais tarde.';
-        if (_.code == 'auth/user-not-found') this.message = 'Usuário não encontrado.';
-        if (_.code == 'auth/wrong-password') this.message = 'Senha incorreta.';
-        if (_.code == 'auth/weak-password') this.message = 'A senha deve conter no mínimo 6 caracteres.';
-        if (_.code == 'auth/email-already-in-use') this.message = 'Este e-mail já está em uso.';
-        if (_.code == 'auth/missing-email') this.message = 'E-mail não informado.';
-        if (!!!email) this.message = 'Preencha o e-mail.';
-        if (!!!password) this.message = 'Preencha a senha com 6 caracteres.';
-        this._message.show(this.message, this.duration);
-    }
-
+    this._message.show(message, 2000);
+  }
 }

@@ -19,7 +19,7 @@
         <ion-list-header>{{ grupo.mes }}</ion-list-header>
         
         <ng-container *ngFor="let evento of grupo.eventos">
-          <div [routerLink]="['/evento', evento.id]">
+          <div [routerLink]="['/ingresso', evento.id]">
             <ion-item lines="none" class="evento-item">
               <ion-thumbnail slot="start">
                 <ion-img 
@@ -58,7 +58,7 @@
         <ion-list-header>{{ grupo.mes }}</ion-list-header>
         
         <ng-container *ngFor="let evento of grupo.eventos">
-          <div [routerLink]="['/evento', evento.id]">
+          <div [routerLink]="['/ingresso', evento.id]">
             <ion-item lines="none" class="evento-item">
               <ion-thumbnail slot="start">
                 <ion-img 

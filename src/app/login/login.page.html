@@ -7,10 +7,9 @@
     <ion-input [(ngModel)]="email" placeholder="Usuário ou email" type="email"></ion-input>
     <ion-input [(ngModel)]="senha" placeholder="Senha" type="password"></ion-input>
 
+    <a routerLink="/registrar">Registre-se</a>
     <a (click)="esqueciSenha()">Esqueci meu acesso...</a>
 
     <ion-button expand="block" color="success" (click)="login()">ENTRAR</ion-button>
   </div>
 </ion-content>
-
-<app-navbar></app-navbar>

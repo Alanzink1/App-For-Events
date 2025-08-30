@@ -11,7 +11,8 @@ interface Perfil {
   fotoUrl: string;
   nome: string;
   telefone: string;
-  ultimoLogin: any; // O Firebase usa um tipo Timestamp
+  organizador: boolean;
+  ultimoLogin: any;
 }
 
 @Component({

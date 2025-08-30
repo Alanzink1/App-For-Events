@@ -7,8 +7,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
-  <div class="container-evento" *ngIf="evento">
+  <div *ngIf="!evento" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
 
+  <div class="container-evento" *ngIf="evento">
     <ion-img [src]="evento.imagemUrl" class="evento-imagem"></ion-img>
 
     <div class="ion-padding">
@@ -38,7 +41,7 @@
         </ion-card-content>
       </ion-card>
 
-       <ion-card class="info-card">
+      <ion-card class="info-card">
         <ion-card-header>
           <ion-card-title color="dark">Regras e Condições</ion-card-title>
         </ion-card-header>
@@ -46,15 +49,21 @@
           Aqui vão as regras e condições do evento, como classificação etária, itens proibidos, políticas de cancelamento, etc.
         </ion-card-content>
       </ion-card>
-
     </div>
   </div>
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <ion-toolbar color="light">
-    <ion-button class="h4" color="success" expand="block" shape="round" id="botao-confirmar">
-      Confirmar a minha
+    <ion-button
+      class="h4"
+      color="success"
+      expand="block"
+      shape="round"
+      (click)="confirmarPresenca()"
+      [disabled]="isConfirming">
+      <ion-spinner *ngIf="isConfirming" name="crescent"></ion-spinner>
+      <span *ngIf="!isConfirming">Confirmar Presença</span>
     </ion-button>
   </ion-toolbar>
 </ion-footer>

@@ -17,7 +17,7 @@ interface Evento {
 }
 
 interface Ingresso {
-  id: string;
+  idIngresso: string;
   eventoId: string;
   usuarioId: string;
   codigoQRCode: string;
@@ -136,8 +136,8 @@ export class ConfirmadosPage implements OnInit {
           const diaDaSemana = diasSemana[dataEvento.getDay()];
 
           return {
-            ...ingresso,
             ...eventoCorrespondente,
+            ...ingresso,
             dataDia: dia,
             dataMes: mes,
             diaDaSemana: diaDaSemana,
@@ -166,6 +166,7 @@ export class ConfirmadosPage implements OnInit {
 
   this.eventosIreiAgrupados = this.agruparEventosPorMes(this.eventosIrei);
   this.eventosJaFuiAgrupados = this.agruparEventosPorMes(this.eventosJaFui);
+
 
   this.isLoading = false;
 }

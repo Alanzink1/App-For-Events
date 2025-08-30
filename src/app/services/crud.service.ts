@@ -1,4 +1,4 @@
-import { FieldPath, orderBy } from '@firebase/firestore';
+import { FieldPath, orderBy, setDoc } from '@firebase/firestore';
 import { Injectable } from '@angular/core';
 import { addDoc, getDocs, doc, updateDoc, collection, Firestore, deleteDoc, query, where, WhereFilterOp, startAt, endAt } from '@angular/fire/firestore';
 import { AuthenticateService } from 'src/app/services/auth.service';
@@ -51,6 +51,11 @@ export class CrudService {
           });
         return result;
     }
+
+    setDocument(collectionName: string, docId: string, data: any) {
+            const docRef = doc(this.firestore, collectionName, docId);
+            return setDoc(docRef, data);
+        }
 
 
     async fetchWhereIn<T>(collectionName: string, field: string, values: any[]): Promise<T[]> {
