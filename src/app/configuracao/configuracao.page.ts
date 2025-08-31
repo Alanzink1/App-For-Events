@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticateService } from '../services/auth.service'; // Importe seu serviço de autenticação
+import { AuthenticateService } from '../services/auth.service';
 
 @Component({
   selector: 'app-configuracao',
@@ -9,20 +9,23 @@ import { AuthenticateService } from '../services/auth.service'; // Importe seu s
 })
 export class ConfiguracaoPage implements OnInit {
 
-  // 1. Injete o AuthService e o Router
+  // Toggles das notificações e biometria
+  alertasEventos: boolean = true;
+  promocoesOfertas: boolean = true;
+  resumoSemanal: boolean = true;
+  ativarBiometria: boolean = false;
+
   constructor(
     private authService: AuthenticateService,
     private router: Router
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  // 2. Crie a função de logout
+  // Logout
   async logout() {
     try {
       await this.authService.logout();
-      // 3. Redirecione o usuário para a página de login após o logout
       this.router.navigate(['/login']);
       console.log('Usuário deslogado com sucesso!');
     } catch (error) {
@@ -30,4 +33,25 @@ export class ConfiguracaoPage implements OnInit {
     }
   }
 
+  // Funções placeholders para navegação/ações
+  editarPerfil() { console.log('Editar perfil'); }
+  alterarSenha() { console.log('Alterar senha'); }
+  gerenciarMetodosLogin() { console.log('Gerenciar métodos de login'); }
+  verHistoricoCompras() { console.log('Ver histórico de compras'); }
+
+  alterarIdioma() { console.log('Alterar idioma'); }
+  alterarTema() { console.log('Alterar tema'); }
+  alterarFormatoHora() { console.log('Alterar formato de hora'); }
+  alterarExibicaoIngressos() { console.log('Alterar exibição de ingressos'); }
+
+  gerenciarDispositivos() { console.log('Gerenciar dispositivos'); }
+  verPoliticaPrivacidade() { console.log('Política de privacidade'); }
+  exportarDados() { console.log('Exportar dados pessoais'); }
+
+  abrirFAQ() { console.log('Abrir FAQ'); }
+  enviarFeedback() { console.log('Enviar feedback'); }
+  contatoSuporte() { console.log('Contato com suporte'); }
+
+  verAtualizacoes() { console.log('Ver atualizações'); }
+  verCreditos() { console.log('Ver créditos'); }
 }

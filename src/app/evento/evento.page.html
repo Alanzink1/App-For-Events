@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" color="light" class="back-button-custom"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon *ngIf="isLogged" (click)="salvarFavoritos()" color="light" [name]="heartName" class="heart-outline-custom"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -53,7 +56,7 @@
   </div>
 </ion-content>
 
-<ion-footer class="ion-no-border">
+<ion-footer class="ion-no-border" *ngIf="isLogged">
   <ion-toolbar color="light">
     <ion-button
       class="h4"

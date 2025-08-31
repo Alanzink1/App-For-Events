@@ -46,6 +46,14 @@ const routes: Routes = [
   {
     path: 'ingresso/:id',
     loadChildren: () => import('./ingresso/ingresso.module').then( m => m.IngressoPageModule)
+  },
+  {
+    path: 'eventos-salvos',
+    loadChildren: () => import('./eventos-salvos/eventos-salvos.module').then( m => m.EventosSalvosPageModule)
+  },
+  {
+    path: 'historico',
+    loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoPageModule)
   }
 ];
 

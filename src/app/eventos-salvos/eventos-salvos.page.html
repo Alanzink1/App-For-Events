@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <app-header></app-header>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h4>Eventos Salvos</h4>
+  <!-- Loader -->
+  <ion-spinner *ngIf="isLoading" name="crescent" class="spinner-center"></ion-spinner>
+
+  <!-- Mensagem caso não haja eventos -->
+  <div *ngIf="!isLoading && eventos.length === 0" class="no-eventos">
+    Nenhum evento salvo.
+  </div>
+
+  <!-- Lista de eventos -->
+  <ng-container *ngFor="let evento of eventos">
+    <div [routerLink]="['/evento', evento.id]">
+      <ion-item lines="none" class="evento-item">
+        <ion-thumbnail slot="start">
+          <ion-img 
+            [src]="evento.imagemUrl"
+            class="evento-imagem">
+          </ion-img>
+        </ion-thumbnail>
+
+        <ion-label>
+          <h2 class="evento-titulo">{{evento.titulo}}</h2>
+          <p class="evento-local">
+            <ion-icon name="location-outline"></ion-icon>
+            {{evento.local}}
+          </p>
+        </ion-label>
+
+        <div class="evento-data" slot="end">
+          <span class="mes">{{evento.dataMes}}</span>
+          <span class="dia">{{evento.dataDia}}</span>
+          <span class="dia-semana">{{evento.diaDaSemana}}</span>
+        </div>
+      </ion-item>
+    </div>
+  </ng-container>
+
+</ion-content>
+
+<app-navbar></app-navbar>

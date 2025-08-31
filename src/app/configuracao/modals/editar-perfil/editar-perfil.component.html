@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="fechar()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">Nome</ion-label>
+    <ion-input [(ngModel)]="nome"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">E-mail</ion-label>
+    <ion-input [(ngModel)]="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Telefone</ion-label>
+    <ion-input [(ngModel)]="telefone"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="salvar()">Salvar</ion-button>
+</ion-content>

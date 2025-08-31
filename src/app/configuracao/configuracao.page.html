@@ -1,10 +1,150 @@
 <app-header></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item lines="none" class="option-item" (click)="logout()" button>
-    <ion-icon name="exit-outline" slot="start" color="danger"></ion-icon>
-    <ion-label color="danger">Sair</ion-label>
-  </ion-item>
+  <ion-list lines="none">
+
+    <!-- 1️⃣ Conta -->
+    <ion-list-header>
+      Conta
+    </ion-list-header>
+
+    <ion-item button (click)="editarPerfil()">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label>Editar perfil</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="alterarSenha()">
+      <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+      <ion-label>Alterar senha</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="gerenciarMetodosLogin()">
+      <ion-icon name="key-outline" slot="start"></ion-icon>
+      <ion-label>Gerenciar métodos de login</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="verHistoricoCompras()">
+      <ion-icon name="receipt-outline" slot="start"></ion-icon>
+      <ion-label>Ver histórico de compras</ion-label>
+    </ion-item>
+
+    <!-- 2️⃣ Notificações -->
+    <ion-list-header>
+      Notificações
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Alertas de eventos</ion-label>
+      <ion-toggle [(ngModel)]="alertasEventos"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Promoções e ofertas</ion-label>
+      <ion-toggle [(ngModel)]="promocoesOfertas"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Resumo semanal</ion-label>
+      <ion-toggle [(ngModel)]="resumoSemanal"></ion-toggle>
+    </ion-item>
+
+    <!-- 3️⃣ Preferências do app -->
+    <ion-list-header>
+      Preferências do app
+    </ion-list-header>
+
+    <ion-item button (click)="alterarIdioma()">
+      <ion-icon name="globe-outline" slot="start"></ion-icon>
+      <ion-label>Idioma</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="alterarTema()">
+      <ion-icon name="moon-outline" slot="start"></ion-icon>
+      <ion-label>Tema</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="alterarFormatoHora()">
+      <ion-icon name="time-outline" slot="start"></ion-icon>
+      <ion-label>Formato de data/hora</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="alterarExibicaoIngressos()">
+      <ion-icon name="albums-outline" slot="start"></ion-icon>
+      <ion-label>Exibição de ingressos</ion-label>
+    </ion-item>
+
+    <!-- 4️⃣ Segurança e privacidade -->
+    <ion-list-header>
+      Segurança e privacidade
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Ativar biometria</ion-label>
+      <ion-toggle [(ngModel)]="ativarBiometria"></ion-toggle>
+    </ion-item>
+
+    <ion-item button (click)="gerenciarDispositivos()">
+      <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+      <ion-label>Gerenciar dispositivos conectados</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="verPoliticaPrivacidade()">
+      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      <ion-label>Política de privacidade e termos</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="exportarDados()">
+      <ion-icon name="download-outline" slot="start"></ion-icon>
+      <ion-label>Exportar dados pessoais</ion-label>
+    </ion-item>
+
+    <!-- 5️⃣ Suporte -->
+    <ion-list-header>
+      Suporte
+    </ion-list-header>
+
+    <ion-item button (click)="abrirFAQ()">
+      <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+      <ion-label>Central de ajuda / FAQ</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="enviarFeedback()">
+      <ion-icon name="chatbubbles-outline" slot="start"></ion-icon>
+      <ion-label>Enviar feedback</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="contatoSuporte()">
+      <ion-icon name="call-outline" slot="start"></ion-icon>
+      <ion-label>Contato com suporte</ion-label>
+    </ion-item>
+
+    <!-- 6️⃣ Sobre o app -->
+    <ion-list-header>
+      Sobre o app
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Versão do app</ion-label>
+      <ion-note slot="end">1.0.0</ion-note>
+    </ion-item>
+
+    <ion-item button (click)="verAtualizacoes()">
+      <ion-icon name="refresh-outline" slot="start"></ion-icon>
+      <ion-label>Atualizações</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="verCreditos()">
+      <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+      <ion-label>Créditos / desenvolvedores</ion-label>
+    </ion-item>
+
+    <!-- Logout -->
+    <ion-item lines="none" class="option-item" (click)="logout()" button>
+      <ion-icon name="exit-outline" slot="start" color="danger"></ion-icon>
+      <ion-label color="danger">Sair</ion-label>
+    </ion-item>
+
+  </ion-list>
 </ion-content>
 
 <app-navbar></app-navbar>

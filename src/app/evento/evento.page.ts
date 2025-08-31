@@ -3,15 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
 import { Browser } from '@capacitor/browser';
 import { environment } from 'src/environments/environment';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
-import { serverTimestamp } from '@angular/fire/firestore';
+import { Auth, onAuthStateChanged, user, User } from '@angular/fire/auth';
+import { arrayUnion, doc, serverTimestamp, updateDoc, Firestore, arrayRemove, getDoc } from '@angular/fire/firestore';
 import { ModalController } from '@ionic/angular';
 import { AnimationOptions } from 'ngx-lottie';
 import { LottieModule } from 'ngx-lottie'; // ✅ Importação necessária para o modal
 import { SuccessModalComponent } from '../components/success-modal/success-modal.component';
+import { profile } from 'console';
 
 
-// --- Componente Principal da Página do Evento ---
+
 @Component({
   selector: 'app-evento',
   templateUrl: './evento.page.html',
@@ -20,8 +21,12 @@ import { SuccessModalComponent } from '../components/success-modal/success-modal
 export class EventoPage implements OnInit {
 
   evento: any;
+  eventosSalvos: any;
   urlMapaEstatico: string = '';
   isConfirming = false;
+  isLogged: User | null = null;
+  heartName: string = 'heart-outline';
+  
   private apiKey = environment.googleMapsApiKey;
 
   @ViewChild('mapaContainer') mapaContainer!: ElementRef;
@@ -31,18 +36,47 @@ export class EventoPage implements OnInit {
     private crudService: CrudService,
     private router: Router,
     private auth: Auth,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private firestore: Firestore 
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.crudService.fetchById(id, 'eventos').then(evento => {
-          this.evento = evento;
-          setTimeout(() => this.gerarUrlMapa(), 0);
-        });
-      }
+
+    onAuthStateChanged(this.auth, async (user) => {
+      this.isLogged = user;
+      
+      
+      this.route.params.subscribe(async params => {
+        const id = params['id'];
+        if (!id) return;
+        
+        
+        // busca o evento independente de estar logado
+        this.evento = await this.crudService.fetchById(id, 'eventos');
+        setTimeout(() => this.gerarUrlMapa(), 0);
+
+        if (user) {
+          this.adicionarAoHistorico(user?.uid);
+          
+          const userDocRef = doc(this.firestore, "usuarios", user.uid);
+          const userSnap = await getDoc(userDocRef);
+
+          if (userSnap.exists()) {
+            const userData = userSnap.data() as any;
+            if (userData.eventosId && userData.eventosId.includes(this.evento.id)) {
+              this.heartName = 'heart';
+            } else {
+              this.heartName = 'heart-outline';
+            }
+          } else {
+            this.heartName = 'heart-outline';
+          }
+
+        } else {
+          // usuário não logado: apenas define heart-outline
+          this.heartName = 'heart-outline';
+        }
+      });
     });
   }
 
@@ -75,6 +109,62 @@ export class EventoPage implements OnInit {
       }
     });
   }
+
+  async salvarFavoritos() {
+    const isFavoritado = this.heartName === 'heart'; // antes da troca
+
+    this.heartName = isFavoritado ? 'heart-outline' : 'heart';
+
+    onAuthStateChanged(this.auth, async (user) => {
+      if (!user) return;
+
+      try {
+        const userRef = doc(this.firestore, "usuarios", user.uid);
+
+        await updateDoc(userRef, {
+          eventosId: isFavoritado 
+            ? arrayRemove(this.evento.id)
+            : arrayUnion(this.evento.id) 
+        });
+
+      } catch (error) {
+        console.error("Erro ao salvar evento:", error);
+      }
+    });
+  }
+
+  async adicionarAoHistorico(userId: string) {
+    if (!this.evento?.id) return; // garante que o evento já existe
+
+    try {
+      const userRef = doc(this.firestore, "usuarios", userId);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) return;
+
+      const userData = userSnap.data() as any;
+      let historico = userData.historico || [];
+
+      // remove o evento se já existir para não duplicar
+      historico = historico.filter((id: string) => id !== this.evento.id);
+
+      // adiciona o novo evento no início
+      historico.unshift(this.evento.id);
+
+      // limita a 10 itens
+      if (historico.length > 10) {
+        historico = historico.slice(0, 10);
+      }
+
+      // atualiza o Firestore
+      await updateDoc(userRef, { historico });
+
+    } catch (error) {
+      console.error("Erro ao atualizar histórico do usuário:", error);
+    }
+  }
+
+
 
   async exibirModalSucesso() {
     const modal = await this.modalController.create({
