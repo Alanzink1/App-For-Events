@@ -5,6 +5,7 @@ import { AuthenticateService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AlertController } from '@ionic/angular';
 import { getDoc } from '@angular/fire/firestore';
+import { getDownloadURL, ref, uploadBytes, Storage } from '@angular/fire/storage';
 
 @Injectable({
     providedIn: 'root',
@@ -18,6 +19,7 @@ export class CrudService {
     constructor(
         public firestore: Firestore,
         private _message: MessageService,
+        private storage: Storage,
         private _auth: AuthenticateService,
         private _alertController: AlertController
     ) {}
@@ -150,7 +152,17 @@ export class CrudService {
         return data;
     }
 
-    
+    async uploadFile(collectionName: string, uid: string, file: File): Promise<string> {
+    try {
+      const storageRef = ref(this.storage, `${collectionName}/${uid}`);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      return url;
+    } catch (err) {
+      this._message.show('Erro ao enviar arquivo.');
+      return '';
+    }
+  }
 
     async fetchById(id: string, remoteCollectionName: string): Promise<any> {
     this.isLoading = true;
@@ -230,6 +242,19 @@ export class CrudService {
 
         return result;
     }
+
+    async updateProfile(id: string, data: any, remoteCollectionName: string): Promise<boolean> {
+    try {
+        const docRef = doc(this.firestore, remoteCollectionName, id);
+        await updateDoc(docRef, data);
+        this._message.show('Informações atualizadas!');
+        return true;
+    } catch (err) {
+        this._message.show('Erro ao atualizar.');
+        return false;
+    }
+    }
+
 
     /*
     * @description: Remover um item do banco de dados

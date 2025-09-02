@@ -8,6 +8,8 @@ import { ConfiguracaoPageRoutingModule } from './configuracao-routing.module';
 
 import { ConfiguracaoPage } from './configuracao.page';
 import { SharedModule } from '../shared/shared.module';
+import { EditarPerfilModule } from './modals/editar-perfil/editar-perfil.module';
+import { AlterarSenhaModule } from './modals/alterar-senha/alterar-senha.module';
 
 @NgModule({
   imports: [
@@ -15,6 +17,9 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     IonicModule,
     SharedModule,
+    FormsModule,
+    EditarPerfilModule,
+    AlterarSenhaModule,
     ConfiguracaoPageRoutingModule
   ],
   declarations: [ConfiguracaoPage]

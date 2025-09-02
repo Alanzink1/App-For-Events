@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticateService } from '../services/auth.service';
+import { ModalController } from '@ionic/angular';
+import { EditarPerfilComponent } from './modals/editar-perfil/editar-perfil.component';
+import { AlterarSenhaComponent } from './modals/alterar-senha/alterar-senha.component';
 
 @Component({
   selector: 'app-configuracao',
@@ -8,7 +11,6 @@ import { AuthenticateService } from '../services/auth.service';
   styleUrls: ['./configuracao.page.scss'],
 })
 export class ConfiguracaoPage implements OnInit {
-
   // Toggles das notificações e biometria
   alertasEventos: boolean = true;
   promocoesOfertas: boolean = true;
@@ -17,10 +19,13 @@ export class ConfiguracaoPage implements OnInit {
 
   constructor(
     private authService: AuthenticateService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private modalCtrl: ModalController
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
+
+  
 
   // Logout
   async logout() {
@@ -34,8 +39,29 @@ export class ConfiguracaoPage implements OnInit {
   }
 
   // Funções placeholders para navegação/ações
-  editarPerfil() { console.log('Editar perfil'); }
-  alterarSenha() { console.log('Alterar senha'); }
+  async editarPerfil() {
+    const modal = await this.modalCtrl.create({
+      component: EditarPerfilComponent,
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      console.log('Dados atualizados:', data); // aqui você pode atualizar localmente a UI
+    }
+  }
+
+  async alterarSenha() {
+    const modal = await this.modalCtrl.create({
+      component: AlterarSenhaComponent,
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      console.log('Dados atualizados:', data); // aqui você pode atualizar localmente a UI
+    }
+  }
   gerenciarMetodosLogin() { console.log('Gerenciar métodos de login'); }
   verHistoricoCompras() { console.log('Ver histórico de compras'); }
 
