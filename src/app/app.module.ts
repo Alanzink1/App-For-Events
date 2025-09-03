@@ -19,6 +19,8 @@ import { playerFactory } from './evento/evento.module';
 import { environment } from '../environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireModule } from '@angular/fire/compat';
+import { IonicStorageModule } from '@ionic/storage-angular';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +29,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     // 4. Import other AngularFire modules you're using
@@ -38,6 +41,9 @@ import { AngularFireModule } from '@angular/fire/compat';
     provideStorage(() => getStorage()),
 
     LottieModule.forRoot({ player: playerFactory }),
+    IonicStorageModule.forRoot({
+      name: '__confirmaedb', // nome do banco
+    })
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

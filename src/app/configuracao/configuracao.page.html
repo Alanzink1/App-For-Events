@@ -45,11 +45,20 @@
     <ion-item button (click)="alterarIdioma()">
       <ion-icon name="globe-outline" slot="start"></ion-icon>
       <ion-label>Idioma</ion-label>
+      <ion-select #idiomaSelect>
+      <!-- <ion-select (ionChange)="changeLang($event.detail.value)"> -->
+        <ion-select-option value="pt">Português</ion-select-option>
+        <!-- <ion-select-option value="en">English</ion-select-option> -->
+      </ion-select>
     </ion-item>
 
     <ion-item button (click)="alterarTema()">
       <ion-icon name="moon-outline" slot="start"></ion-icon>
       <ion-label>Tema</ion-label>
+      <ion-select #temaSelect [(ngModel)]="temaSelecionado" (ionChange)="alterarTema()">
+        <ion-select-option value="claro">Claro</ion-select-option>
+        <ion-select-option value="escuro">Escuro</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item button (click)="alterarExibicaoIngressos()">
@@ -64,7 +73,7 @@
 
     <ion-item>
       <ion-label>Ativar biometria</ion-label>
-      <ion-toggle [(ngModel)]="ativarBiometria"></ion-toggle>
+      <ion-toggle [(ngModel)]="usarBiometria" (ionChange)="toggleBiometria()"></ion-toggle>
     </ion-item>
 
     <ion-item button (click)="verPoliticaPrivacidade()">

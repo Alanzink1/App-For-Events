@@ -10,6 +10,7 @@ import { ConfiguracaoPage } from './configuracao.page';
 import { SharedModule } from '../shared/shared.module';
 import { EditarPerfilModule } from './modals/editar-perfil/editar-perfil.module';
 import { AlterarSenhaModule } from './modals/alterar-senha/alterar-senha.module';
+import { CreditosModule } from './modals/creditos/creditos.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { AlterarSenhaModule } from './modals/alterar-senha/alterar-senha.module'
     FormsModule,
     EditarPerfilModule,
     AlterarSenhaModule,
+    CreditosModule,
     ConfiguracaoPageRoutingModule
   ],
   declarations: [ConfiguracaoPage]

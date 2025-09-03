@@ -1,24 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, User, UserCredential } from '@angular/fire/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  User,
+  UserCredential
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { MessageService } from './message.service';
 import { Observable } from 'rxjs';
+import { NativeBiometric } from 'capacitor-native-biometric';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticateService {
   isLoading = false;
+  private storageInit = false;
 
-  constructor( 
+  constructor(
     public auth: Auth,
     private _message: MessageService,
     private _router: Router,
-  ) {}
-  
-  /**
-   * Registra um novo usuário. Retorna o UserCredential em caso de sucesso ou null em caso de falha.
-   */
+    private storage: Storage
+  ) {
+    this.initStorage();
+  }
+
+  // -----------------------------
+  // FIREBASE AUTH
+  // -----------------------------
   public async register(email: string, password: string) {
     this.isLoading = true;
     try {
@@ -33,9 +49,6 @@ export class AuthenticateService {
     }
   }
 
-  /**
-   * Efetua login com e-mail e senha.
-   */
   public async login(email: string, password: string) {
     this.isLoading = true;
     try {
@@ -51,25 +64,18 @@ export class AuthenticateService {
     }
   }
 
-  /**
-   * Efetua login com uma conta Google.
-   */
   async loginComGoogle(): Promise<UserCredential | null> {
-  this.isLoading = true;
-  try {
-    // Apenas faz o login e retorna o resultado
-    return await signInWithPopup(this.auth, new GoogleAuthProvider());
-  } catch (error: any) {
-    this.showErro(error);
-    return null;
-  } finally {
-    this.isLoading = false;
+    this.isLoading = true;
+    try {
+      return await signInWithPopup(this.auth, new GoogleAuthProvider());
+    } catch (error: any) {
+      this.showErro(error);
+      return null;
+    } finally {
+      this.isLoading = false;
+    }
   }
-}
 
-  /**
-   * Efetua logout do usuário.
-   */
   async logout(): Promise<void> {
     try {
       await signOut(this.auth);
@@ -79,10 +85,6 @@ export class AuthenticateService {
     }
   }
 
-  /**
-   * Retorna um Observable com o estado de autenticação (usuário logado ou null).
-   * Essencial para o resto do app saber se o usuário está logado.
-   */
   getAuthState(): Observable<User | null> {
     return new Observable(subscriber => {
       onAuthStateChanged(this.auth, user => {
@@ -90,20 +92,56 @@ export class AuthenticateService {
       });
     });
   }
-  
-  /**
-   * Redireciona o usuário para outra página.
-   */
+
+  // -----------------------------
+  // STORAGE + BIOMETRIA
+  // -----------------------------
+  private async initStorage() {
+    if (!this.storageInit) {
+      await this.storage.create();
+      this.storageInit = true;
+    }
+  }
+
+  async ativarBiometria() {
+    await this.initStorage();
+    await this.storage.set('usarBiometria', 'true');
+  }
+
+  async desativarBiometria() {
+    await this.initStorage();
+    await this.storage.set('usarBiometria', 'false');
+  }
+
+  async biometriaAtiva(): Promise<boolean> {
+    await this.initStorage();
+    const valor = await this.storage.get('usarBiometria');
+    return valor === 'true';
+  }
+
+  async autenticarComBiometria(): Promise<boolean> {
+    try {
+      await NativeBiometric.verifyIdentity({
+        reason: 'Confirme sua identidade',
+        title: 'Login Biométrico',
+      });
+      return true; // se não lançar erro, biometria validada
+    } catch (e) {
+      console.error('Erro na biometria:', e);
+      return false;
+    }
+  }
+
+  // -----------------------------
+  // AUXILIARES
+  // -----------------------------
   redirectTo(page: string): void {
     this._router.navigate([page]);
   }
 
-  /**
-   * Exibe a mensagem de erro com base no código do Firebase.
-   */
   private showErro(error: any): void {
     let message: string = 'Ocorreu um erro inesperado. Tente novamente.';
-    
+
     switch (error.code) {
       case 'auth/too-many-requests':
         message = 'Muitas tentativas de login. Tente novamente mais tarde.';

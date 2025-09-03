@@ -8,6 +8,7 @@ import { MeuPerfilPageRoutingModule } from './meu-perfil-routing.module';
 
 import { MeuPerfilPage } from './meu-perfil.page';
 import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     IonicModule,
     MeuPerfilPageRoutingModule,
+    RouterModule,
     SharedModule
   ],
   declarations: [MeuPerfilPage]

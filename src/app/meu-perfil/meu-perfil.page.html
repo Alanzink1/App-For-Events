@@ -38,7 +38,7 @@
         <ion-label>Eventos Salvos</ion-label>
       </ion-item>
 
-      <ion-button *ngIf="perfil.organizador" expand="block" shape="round" class="organizer-panel-button">
+      <ion-button *ngIf="perfil.organizador" [routerLink]="['/organizador', usuarioLogado.uid, 'home']" expand="block" shape="round" class="organizer-panel-button">
         Painel do Organizador
       </ion-button>
       <ion-button *ngIf="!perfil.organizador" expand="block" shape="round" class="organizer-button">

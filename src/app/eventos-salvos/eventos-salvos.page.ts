@@ -56,10 +56,10 @@ export class EventosSalvosPage implements OnInit {
 
       if (userSnap.exists()) {
         const userData = userSnap.data() as any;
-        const eventosIds: string[] = userData.eventosId || [];
+        const eventosSalvosIds: string[] = userData.eventosSalvosId || [];
 
         // busca os eventos no Firestore
-        const eventosPromises = eventosIds.map(id =>
+        const eventosPromises = eventosSalvosIds.map(id =>
           this.crudService.fetchById(id, "eventos")
         );
 

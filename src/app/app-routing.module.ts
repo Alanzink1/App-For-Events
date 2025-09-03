@@ -54,6 +54,10 @@ const routes: Routes = [
   {
     path: 'historico',
     loadChildren: () => import('./historico/historico.module').then( m => m.HistoricoPageModule)
+  },
+  {
+    path: 'organizador/:id/home',
+    loadChildren: () => import('./organizador/home/home.module').then( m => m.HomePageModule)
   }
 ];
 

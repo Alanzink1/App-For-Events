@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { AuthenticateService } from '../services/auth.service';
 import { ModalController } from '@ionic/angular';
 import { EditarPerfilComponent } from './modals/editar-perfil/editar-perfil.component';
+import { ViewChild } from '@angular/core';
+import { IonSelect } from '@ionic/angular';
 import { AlterarSenhaComponent } from './modals/alterar-senha/alterar-senha.component';
+import { CreditosComponent } from './modals/creditos/creditos.component';
 
 @Component({
   selector: 'app-configuracao',
@@ -16,6 +19,10 @@ export class ConfiguracaoPage implements OnInit {
   promocoesOfertas: boolean = true;
   resumoSemanal: boolean = true;
   ativarBiometria: boolean = false;
+  temaSelecionado: string = '';
+  @ViewChild('idiomaSelect', { static: false }) idiomaSelect!: IonSelect;
+  @ViewChild('temaSelect', { static: false }) temaSelect!: IonSelect;
+  usarBiometria = false;
 
   constructor(
     private authService: AuthenticateService,
@@ -23,7 +30,14 @@ export class ConfiguracaoPage implements OnInit {
     private modalCtrl: ModalController
   ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    const temaSalvo = localStorage.getItem('tema');
+    this.usarBiometria = await this.authService.biometriaAtiva();
+    if (temaSalvo) {
+      this.temaSelecionado = temaSalvo;
+      this.alterarTema();
+    }
+  }
 
   
 
@@ -62,13 +76,29 @@ export class ConfiguracaoPage implements OnInit {
       console.log('Dados atualizados:', data); // aqui você pode atualizar localmente a UI
     }
   }
+
   gerenciarMetodosLogin() { console.log('Gerenciar métodos de login'); }
   verHistoricoCompras() { console.log('Ver histórico de compras'); }
 
-  alterarIdioma() { console.log('Alterar idioma'); }
-  alterarTema() { console.log('Alterar tema'); }
+  alterarIdioma() {
+    this.idiomaSelect.open();
+  }
+
+  alterarTema() {
+    this.temaSelect.open();
+    localStorage.setItem('tema', this.temaSelecionado);
+  }
+
   alterarFormatoHora() { console.log('Alterar formato de hora'); }
   alterarExibicaoIngressos() { console.log('Alterar exibição de ingressos'); }
+
+  async toggleBiometria() {
+    if (this.usarBiometria) {
+      await this.authService.ativarBiometria();
+    } else {
+      await this.authService.desativarBiometria();
+    }
+  }
 
   gerenciarDispositivos() { console.log('Gerenciar dispositivos'); }
   verPoliticaPrivacidade() { console.log('Política de privacidade'); }
@@ -79,5 +109,15 @@ export class ConfiguracaoPage implements OnInit {
   contatoSuporte() { console.log('Contato com suporte'); }
 
   verAtualizacoes() { console.log('Ver atualizações'); }
-  verCreditos() { console.log('Ver créditos'); }
+  async verCreditos() {
+    const modal = await this.modalCtrl.create({
+      component: CreditosComponent,
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      console.log('Dados atualizados:', data); // aqui você pode atualizar localmente a UI
+    }
+  }
 }

@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Painel do Organizador</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="adicionarEvento()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="painel-organizador">
+
+  <ion-grid>
+    <!-- Loader -->
+    <ion-row *ngIf="isLoading" class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+    <!-- Nenhum evento -->
+    <ion-row *ngIf="!isLoading && eventos.length === 0" class="ion-justify-content-center">
+      <ion-col size="12" class="sem-eventos">
+        <p>Nenhum evento cadastrado.</p>
+      </ion-col>
+    </ion-row>
+
+    <!-- Lista de eventos -->
+    <ion-row *ngIf="!isLoading" class="eventos-grid">
+      <ion-col size="6" size-md="3" *ngFor="let evento of eventos">
+        <ion-card class="evento-card">
+          <img [src]="evento.imagemUrl" />
+          <ion-card-header>
+            <ion-card-title>{{ evento.titulo }}</ion-card-title>
+            <ion-card-subtitle>{{ evento.local }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
