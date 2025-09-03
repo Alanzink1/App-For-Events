@@ -4,6 +4,8 @@ import { Firestore, collection, query, where, getDocs, doc, getDoc } from '@angu
 import { AuthenticateService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { AdicionarEventoComponent } from './modals/adicionar-evento/adicionar-evento.component';
+import { ModalController } from '@ionic/angular';
 
 interface Evento {
   id: string;
@@ -36,7 +38,8 @@ export class HomePage implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthenticateService,
     private crudService: CrudService,
-    private auth: Auth
+    private auth: Auth,
+    private modalCtrl: ModalController
   ) { }
 
   async ngOnInit() {
@@ -71,7 +74,15 @@ async listarEventos() {
   }
 }
 
-  adicionarEvento() {
-    this.router.navigate(['/adicionar-evento']);
+  async adicionarEvento() {
+    const modal = await this.modalCtrl.create({
+        component: AdicionarEventoComponent,
+      });
+      await modal.present();
+  
+      const { data } = await modal.onWillDismiss();
+      if (data) {
+        console.log('Dados atualizados:', data); // aqui você pode atualizar localmente a UI
+      }
   }
 }

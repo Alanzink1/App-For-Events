@@ -7,12 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
+import { AdicionarEventoComponent } from './modals/adicionar-evento/adicionar-evento.component';
+import { AdicionarEventoModule } from './modals/adicionar-evento/adicionar-evento.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    AdicionarEventoModule,
     HomePageRoutingModule
   ],
   declarations: [HomePage]

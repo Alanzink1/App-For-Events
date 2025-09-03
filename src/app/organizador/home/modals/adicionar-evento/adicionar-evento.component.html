@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Adicionar Evento</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="fechar()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="adicionarEventoForm" (ngSubmit)="adicionarEvento()">
+    
+    <div class="avatar-uploader" (click)="uploadFoto.click()">
+      <img [src]="fotoPreview" *ngIf="fotoPreview" class="profile-avatar">
+      <div *ngIf="!fotoPreview" class="avatar-placeholder">
+        <ion-icon name="camera-outline"></ion-icon>
+        <span>Adicionar Foto</span>
+      </div>
+      <input type="file" #uploadFoto (change)="onFileSelected($event)" accept="image/*" hidden>
+    </div>
+
+    <ion-item>
+      <ion-input label="Título" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Categorias</ion-label>
+      <ion-searchbar
+        [(ngModel)]="filtro"
+        (ionInput)="filtrarCategorias($event)"
+        placeholder="Digite para buscar categorias..."
+      ></ion-searchbar>
+
+    </ion-item>
+
+    <!-- Chips já selecionados -->
+    <ion-item lines="none">
+      <ion-chip
+        *ngFor="let categoria of categoriasSelecionadas; let i = index"
+        color="primary"
+      >
+        {{ categoria }}
+        <ion-icon name="close-circle" (click)="removerCategoria(i)"></ion-icon>
+      </ion-chip>
+    </ion-item>
+
+    <!-- Lista de sugestões -->
+    <ion-list *ngIf="categoriasFiltradas.length > 0">
+      <ion-item
+        button
+        *ngFor="let cat of categoriasFiltradas"
+        (click)="adicionarCategoria(cat)"
+      >
+        {{ cat }}
+      </ion-item>
+    </ion-list>
+
+    <ion-item>
+      <ion-input label="Localização" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea label="Descrição" labelPlacement="floating" formControlName="nome" type="text" required></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea label="Regras" labelPlacement="floating" formControlName="nome" type="text" required></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Valor" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Data" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Nome do Local" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Chave PIX" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Nome Titular PIX" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Limite Ingressos" labelPlacement="floating" formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+    
+    <ion-button expand="block" type="submit" [disabled]="adicionarEventoForm.invalid || isLoading" class="ion-margin-top">
+      <ion-spinner *ngIf="isLoading"></ion-spinner>
+      <span *ngIf="!isLoading">Criar evento</span>
+    </ion-button>
+  </form>
+</ion-content>
