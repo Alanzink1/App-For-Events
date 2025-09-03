@@ -63,7 +63,7 @@ export class EventoPage implements OnInit {
 
           if (userSnap.exists()) {
             const userData = userSnap.data() as any;
-            if (userData.eventosId && userData.eventosId.includes(this.evento.id)) {
+            if (userData.eventosSalvosId && userData.eventosSalvosId.includes(this.evento.id)) {
               this.heartName = 'heart';
             } else {
               this.heartName = 'heart-outline';
@@ -73,7 +73,6 @@ export class EventoPage implements OnInit {
           }
 
         } else {
-          // usuário não logado: apenas define heart-outline
           this.heartName = 'heart-outline';
         }
       });
@@ -111,7 +110,7 @@ export class EventoPage implements OnInit {
   }
 
   async salvarFavoritos() {
-    const isFavoritado = this.heartName === 'heart'; // antes da troca
+    const isFavoritado = this.heartName === 'heart'; 
 
     this.heartName = isFavoritado ? 'heart-outline' : 'heart';
 
@@ -122,7 +121,7 @@ export class EventoPage implements OnInit {
         const userRef = doc(this.firestore, "usuarios", user.uid);
 
         await updateDoc(userRef, {
-          eventosId: isFavoritado 
+          eventosSalvosId: isFavoritado 
             ? arrayRemove(this.evento.id)
             : arrayUnion(this.evento.id) 
         });
@@ -134,7 +133,7 @@ export class EventoPage implements OnInit {
   }
 
   async adicionarAoHistorico(userId: string) {
-    if (!this.evento?.id) return; // garante que o evento já existe
+    if (!this.evento?.id) return; 
 
     try {
       const userRef = doc(this.firestore, "usuarios", userId);
@@ -145,18 +144,14 @@ export class EventoPage implements OnInit {
       const userData = userSnap.data() as any;
       let historico = userData.historico || [];
 
-      // remove o evento se já existir para não duplicar
       historico = historico.filter((id: string) => id !== this.evento.id);
 
-      // adiciona o novo evento no início
       historico.unshift(this.evento.id);
 
-      // limita a 10 itens
       if (historico.length > 10) {
         historico = historico.slice(0, 10);
       }
 
-      // atualiza o Firestore
       await updateDoc(userRef, { historico });
 
     } catch (error) {
