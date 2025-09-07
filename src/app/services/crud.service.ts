@@ -1,4 +1,4 @@
-import { FieldPath, orderBy, setDoc } from '@firebase/firestore';
+import { DocumentReference, FieldPath, orderBy, setDoc } from '@firebase/firestore';
 import { Injectable } from '@angular/core';
 import { addDoc, getDocs, doc, updateDoc, collection, Firestore, deleteDoc, query, where, WhereFilterOp, startAt, endAt } from '@angular/fire/firestore';
 import { AuthenticateService } from 'src/app/services/auth.service';
@@ -29,30 +29,26 @@ export class CrudService {
     * @param item: any
     * @param collection: string
     */
-    insert(item: any, remoteCollectionName: string): Boolean {
-        console.log(item)
-        let result = false;
-        
-        if (!item) { 
-            this._message.show('Não foi possível salvar'); 
-            return false;
-        }
+    async insert(item: any, remoteCollectionName: string): Promise<string> {
+  if (!item) {
+    this._message.show('Não foi possível salvar');
+    throw new Error("Item inválido");
+  }
 
-        this.isLoading = true;
-        const dbInstance = collection(this.firestore, remoteCollectionName);
-        addDoc(dbInstance, item)
-          .then(() => {
-            this._message.show('Salvo com sucesso.');
-            result = true;
-          })
-          .catch(() => {
-            this._message.show('Erro ao salvar.');
-          })
-          .finally(() => {
-            this.isLoading = false;
-          });
-        return result;
-    }
+  try {
+    this.isLoading = true;
+    const dbInstance = collection(this.firestore, remoteCollectionName);
+    const docRef: DocumentReference = await addDoc(dbInstance, item);
+
+    this._message.show('Salvo com sucesso.');
+    return docRef.id; // 🔥 Retorna só o ID do documento
+  } catch (error) {
+    this._message.show('Erro ao salvar.');
+    throw error;
+  } finally {
+    this.isLoading = false;
+  }
+}
 
     setDocument(collectionName: string, docId: string, data: any) {
             const docRef = doc(this.firestore, collectionName, docId);

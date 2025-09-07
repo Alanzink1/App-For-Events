@@ -1,9 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CrudService } from '../services/crud.service';
-import { Filesystem, Directory } from '@capacitor/filesystem'; // Importe Filesystem e Directory
-import { toPng } from 'html-to-image'; // Importe a função toPng
+import { Filesystem, Directory } from '@capacitor/filesystem'; // Opcional
+import { toPng } from 'html-to-image'; // Para gerar PNG do QR code
 import { Media, MediaSaveOptions } from '@capacitor-community/media';
+import { AlertController, ToastController } from '@ionic/angular';
+import { Firestore, collection, query, where, getDocs, deleteDoc, doc } from '@angular/fire/firestore';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-ingresso',
@@ -19,19 +22,33 @@ export class IngressoPage implements OnInit {
   mes!: string;
   ano!: string;
 
-  // Adicione esta linha para referenciar o elemento HTML
+  userId: string | null = null;
+
   @ViewChild('areaParaSalvar') areaParaSalvar!: ElementRef;
 
   constructor(
     private crudService: CrudService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private firestore: Firestore,
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
+    private auth: Auth
+  ) {
+    // Captura usuário logado
+    onAuthStateChanged(this.auth, user => {
+      if (user) this.userId = user.uid;
+    });
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
+        // Busca ingresso pelo id
         this.crudService.fetchById(id, 'ingressos').then(ingresso => {
+          if (!ingresso) return;
+
+          // Busca evento vinculado ao ingresso
           this.crudService.fetchById(ingresso.eventoId, 'eventos').then(evento => {
             this.evento = evento;
 
@@ -57,7 +74,7 @@ export class IngressoPage implements OnInit {
   }
 
   private formatarData(dataEvento: string) {
-    const data = new Date(dataEvento);
+    const data = new Date(dataEvento + 'T00:00:00');
     const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     const meses = [
       'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
@@ -72,29 +89,82 @@ export class IngressoPage implements OnInit {
 
   async baixarIngresso() {
     if (!this.areaParaSalvar) {
-    console.error('Elemento HTML não encontrado!');
-    return;
+      console.error('Elemento HTML não encontrado!');
+      return;
+    }
+
+    try {
+      const dataUrl = await toPng(this.areaParaSalvar.nativeElement);
+      const base64Data = dataUrl.split(',')[1];
+
+      const options: MediaSaveOptions = {
+        path: base64Data,
+        albumIdentifier: 'MeusIngressos',
+        fileName: `ingresso-${this.evento.titulo.replace(' ', '-')}`
+      };
+
+      await Media.savePhoto(options);
+
+      this.showToast('Ingresso salvo na galeria com sucesso!', 'success');
+
+    } catch (error) {
+      console.error('Erro ao salvar o ingresso na galeria:', error);
+      this.showToast('Erro ao salvar o ingresso. Verifique as permissões.', 'danger');
+    }
   }
 
-  try {
-    const dataUrl = await toPng(this.areaParaSalvar.nativeElement);
-    const base64Data = dataUrl.split(',')[1];
+  async cancelarIngresso() {
+    if (!this.userId || !this.evento?.id) return;
 
-    // Define as opções para salvar a imagem
-    const options: MediaSaveOptions = {
-      path: base64Data, // o plugin aceita base64 diretamente
-      albumIdentifier: 'MeusIngressos', // Nome do álbum na galeria
-      fileName: `ingresso-${this.evento.titulo.replace(' ', '-')}` // Indica que o tipo de mídia é uma imagem
-    };
+    const alert = await this.alertCtrl.create({
+      header: 'Cancelar Ingresso',
+      message: 'Tem certeza que deseja cancelar este ingresso?',
+      buttons: [
+        { text: 'Não', role: 'cancel' },
+        {
+          text: 'Sim',
+          handler: async () => {
+            try {
+              const ingressosRef = collection(this.firestore, 'ingressos');
+              const q = query(
+                ingressosRef,
+                where('eventoId', '==', this.evento.id),
+                where('usuarioId', '==', this.userId)
+              );
 
-    // Salva a imagem usando o plugin de mídia
-    await Media.savePhoto(options);
+              const querySnapshot = await getDocs(q);
 
-    alert('Ingresso salvo na galeria com sucesso!');
+              if (querySnapshot.empty) {
+                this.showToast('Ingresso não encontrado.', 'danger');
+                return;
+              }
 
-  } catch (error) {
-    console.error('Erro ao salvar o ingresso na galeria:', error);
-    alert('Erro ao salvar o ingresso. Verifique as permissões.');
+              // Deletar ingresso(s)
+              for (const docSnap of querySnapshot.docs) {
+                await deleteDoc(doc(this.firestore, 'ingressos', docSnap.id));
+              }
+
+              this.showToast('Ingresso cancelado com sucesso.', 'success');
+              this.evento = null; // Remove dados do evento da tela
+            } catch (err) {
+              console.error('Erro ao cancelar ingresso:', err);
+              this.showToast('Erro ao cancelar ingresso.', 'danger');
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
+
+  private async showToast(message: string, color: string = 'primary') {
+    const toast = await this.toastCtrl.create({
+      message,
+      color,
+      duration: 2000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 }

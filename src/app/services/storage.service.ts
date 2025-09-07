@@ -1,20 +1,27 @@
-// Em src/app/services/storage.service.ts
 import { Injectable } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { firstValueFrom } from 'rxjs'; // 👈 1. Importe o firstValueFrom
+import { getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
+import { Storage } from '@angular/fire/storage';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class StorageService {
 
-  constructor(private storage: AngularFireStorage) { }
+  constructor(private storage: Storage) {}
 
+  // 📌 Upload para foto de perfil (já existia)
   async uploadFotoPerfil(userId: string, file: File): Promise<string> {
-    const path = `fotos-perfil/${userId}`;
-    const ref = this.storage.ref(path);
-    
-    await ref.put(file);
+    const path = `usuarios/${userId}/perfil/${file.name}`;
+    const storageRef = ref(this.storage, path);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+  }
 
-    // 2. Use firstValueFrom para converter o Observable em Promise
-    return firstValueFrom(ref.getDownloadURL());
+  // 📌 Novo: upload para foto de evento
+  async uploadFotoEvento(eventoId: string, file: File): Promise<string> {
+    const path = `eventos/${eventoId}/${file.name}`;
+    const storageRef = ref(this.storage, path);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
   }
 }

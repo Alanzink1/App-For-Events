@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Evento</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="fechar()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="editarEventoForm">
+
+    <!-- Título -->
+    <ion-item>
+      <ion-label position="floating">Título</ion-label>
+      <ion-input formControlName="titulo"></ion-input>
+    </ion-item>
+
+    <!-- Localização -->
+    <ion-item>
+      <ion-label position="floating">Localização</ion-label>
+      <ion-input formControlName="localizacao"></ion-input>
+    </ion-item>
+
+    <!-- Google Maps -->
+    <div id="map" style="width: 100%; height: 200px; margin: 10px 0;"></div>
+
+    <!-- Foto -->
+    <ion-item>
+      <input type="file" (change)="onFileSelected($event)">
+    </ion-item>
+    <img *ngIf="fotoPreview" [src]="fotoPreview" style="width: 100%; margin-bottom: 10px;">
+
+    <!-- Categorias -->
+    <ion-item>
+      <ion-label position="stacked">Categorias</ion-label>
+      <ion-input placeholder="Filtrar..." [value]="filtro" (ionInput)="filtrarCategorias($event)"></ion-input>
+    </ion-item>
+
+    <ion-list *ngIf="categoriasFiltradas.length > 0">
+      <ion-item button *ngFor="let cat of categoriasFiltradas" (click)="adicionarCategoria(cat)">
+        {{ cat }}
+      </ion-item>
+    </ion-list>
+
+    <div>
+      <ion-chip *ngFor="let cat of categoriasSelecionadas" color="primary" (click)="toggleCategoria(cat)">
+        {{ cat }} <ion-icon name="close-circle"></ion-icon>
+      </ion-chip>
+    </div>
+
+    <!-- Restante do formulário -->
+    <ion-item>
+      <ion-label position="floating">Local</ion-label>
+      <ion-input formControlName="local"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descrição</ion-label>
+      <ion-textarea formControlName="descricao"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Regras</ion-label>
+      <ion-textarea formControlName="regras"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Valor Ingresso</ion-label>
+      <ion-input type="number" formControlName="valorIngresso"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Data</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="data"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Chave PIX</ion-label>
+      <ion-input formControlName="chavePix"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Titular PIX</ion-label>
+      <ion-input formControlName="titularPix"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Limite Ingressos</ion-label>
+      <ion-input type="number" formControlName="limiteIngressos"></ion-input>
+    </ion-item>
+
+    <!-- Botão salvar -->
+    <ion-button expand="block" class="ion-margin-top" (click)="editarEvento()" [disabled]="isLoading">
+      <ion-spinner *ngIf="isLoading"></ion-spinner>
+      Salvar
+    </ion-button>
+
+    <!-- Botão excluir -->
+    <ion-button expand="block" class="ion-margin-top" color="danger" (click)="confirmarExcluir()">
+      Excluir Evento
+    </ion-button>
+
+
+
+  </form>
+
+</ion-content>

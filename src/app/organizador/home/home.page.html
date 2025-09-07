@@ -32,7 +32,7 @@
     <!-- Lista de eventos -->
     <ion-row *ngIf="!isLoading" class="eventos-grid">
       <ion-col size="6" size-md="3" *ngFor="let evento of eventos">
-        <ion-card class="evento-card">
+        <ion-card class="evento-card" (click)="editarEvento(evento)">
           <img [src]="evento.imagemUrl" />
           <ion-card-header>
             <ion-card-title>{{ evento.titulo }}</ion-card-title>
@@ -41,6 +41,7 @@
         </ion-card>
       </ion-col>
     </ion-row>
+
   </ion-grid>
 
 </ion-content>

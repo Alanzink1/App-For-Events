@@ -70,7 +70,7 @@ export class ConfirmadosPage implements OnInit {
   };
 
   const grupos = eventos.reduce((acc, evento) => {
-    const dataEvento = evento.data?.toDate?.() || new Date(evento.data);
+    const dataEvento = evento.data?.toDate?.() || new Date(evento.data + 'T00:00:00');
     const nomeMes = getNomeMes(dataEvento);
 
     // Se o grupo para este mês ainda não existe, crie-o
@@ -128,7 +128,7 @@ export class ConfirmadosPage implements OnInit {
 
           if (!eventoCorrespondente) return null;
 
-          const dataEvento: Date = eventoCorrespondente.data?.toDate?.() || new Date(eventoCorrespondente.data);
+          const dataEvento: Date = eventoCorrespondente.data?.toDate?.() || new Date(eventoCorrespondente.data + 'T00:00:00');
           const dia = dataEvento.getDate().toString().padStart(2, '0');
           const meses = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
           const mes = meses[dataEvento.getMonth()];
@@ -150,7 +150,7 @@ export class ConfirmadosPage implements OnInit {
 
       todosOsConfirmados.forEach(evento => {
         // Converte a data do evento (que pode ser string ou timestamp) para um objeto Date
-        const dataEvento = evento.data?.toDate?.() || new Date(evento.data);
+        const dataEvento = evento.data?.toDate?.() || new Date(evento.data + 'T00:00:00');
 
         if (dataEvento >= agora) {
           this.eventosIrei.push(evento); // Correto: adiciona à lista simples

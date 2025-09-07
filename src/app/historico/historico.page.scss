@@ -128,3 +128,27 @@ ion-thumbnail {
     color: #000;
   }
 }
+
+/* 1) Não force o ion-content a 100% de altura */
+html, body, ion-app { height: 100%; }  /* REMOVA o ion-content daqui */
+
+/* 2) Altura do navbar (ajuste se o teu for maior/menor) */
+:host { --navbar-h: 64px; }
+
+/* 3) Deixa o conteúdo com espaço para o navbar */
+ion-content {
+  --padding-bottom: calc(var(--navbar-h) + env(safe-area-inset-bottom));
+}
+
+/* 4) Fixa o teu componente embaixo, acima do safe area */
+app-navbar {
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0; /* fallback */
+  bottom: env(safe-area-inset-bottom);
+  z-index: 1001;
+  background: var(--ion-tab-bar-background, var(--ion-background-color, #fff));
+  border-top: 1px solid var(--ion-color-step-150, #e5e5e5);
+}

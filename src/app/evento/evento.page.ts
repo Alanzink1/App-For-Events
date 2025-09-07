@@ -10,6 +10,9 @@ import { AnimationOptions } from 'ngx-lottie';
 import { LottieModule } from 'ngx-lottie'; // ✅ Importação necessária para o modal
 import { SuccessModalComponent } from '../components/success-modal/success-modal.component';
 import { profile } from 'console';
+import Stripe from 'stripe';
+import { loadStripe } from '@stripe/stripe-js';
+
 
 
 
@@ -80,7 +83,7 @@ export class EventoPage implements OnInit {
   }
 
   async confirmarPresenca() {
-    this.isConfirming = true;
+  this.isConfirming = true;  
 
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {

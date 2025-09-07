@@ -6,6 +6,7 @@ import { CrudService } from 'src/app/services/crud.service';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { AdicionarEventoComponent } from './modals/adicionar-evento/adicionar-evento.component';
 import { ModalController } from '@ionic/angular';
+import { EditarEventoComponent } from './modals/editar-evento/editar-evento.component';
 
 interface Evento {
   id: string;
@@ -57,7 +58,7 @@ async listarEventos() {
   try {
     if (!this.userId) return;
 
-    const usuarioData = await this.crudService.fetchById(this.userId, 'usuarios');
+    const usuarioData = await this.crudService.fetchById(this.userId, 'organizadores');
     const eventosData = usuarioData.eventosId || [];
 
     const eventosPromises = eventosData.map((id: string) => 
@@ -66,6 +67,7 @@ async listarEventos() {
 
     
     this.eventos = await Promise.all(eventosPromises);
+    console.log(this.eventos)
 
   } catch (error) {
     console.error("Erro ao listar eventos:", error);
@@ -85,4 +87,20 @@ async listarEventos() {
         console.log('Dados atualizados:', data); // aqui você pode atualizar localmente a UI
       }
   }
+
+  async editarEvento(evento: any) {
+    const modal = await this.modalCtrl.create({
+      component: EditarEventoComponent,
+      componentProps: { evento } // 👉 passa o evento para o modal
+    });
+
+    modal.onDidDismiss().then((res) => {
+      if (res.data && res.data.sucesso) {
+        this.listarEventos(); // 👉 recarrega a lista depois da edição
+      }
+    });
+
+    return await modal.present();
+  }
+
 }

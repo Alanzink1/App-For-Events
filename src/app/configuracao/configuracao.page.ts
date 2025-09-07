@@ -35,7 +35,6 @@ export class ConfiguracaoPage implements OnInit {
     this.usarBiometria = await this.authService.biometriaAtiva();
     if (temaSalvo) {
       this.temaSelecionado = temaSalvo;
-      this.alterarTema();
     }
   }
 

@@ -48,8 +48,11 @@
         <ion-card-header>
           <ion-card-title color="dark">Regras e Condições</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-          Aqui vão as regras e condições do evento, como classificação etária, itens proibidos, políticas de cancelamento, etc.
+        <ion-card-content *ngIf="!evento.regras">
+          Sem regras declaradas.
+        </ion-card-content>
+        <ion-card-content *ngIf="evento.regras">
+          {{ evento.regras }}
         </ion-card-content>
       </ion-card>
     </div>
